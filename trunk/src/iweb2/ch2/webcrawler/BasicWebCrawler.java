@@ -1,6 +1,5 @@
 package iweb2.ch2.webcrawler;
 
-import iweb2.ch2.webcrawler.db.DocumentIdSequence;
 import iweb2.ch2.webcrawler.db.FetchedDocsDB;
 import iweb2.ch2.webcrawler.db.KnownUrlDB;
 import iweb2.ch2.webcrawler.db.ProcessedDocsDB;
@@ -13,6 +12,7 @@ import iweb2.ch2.webcrawler.parser.common.DocumentParserFactory;
 import iweb2.ch2.webcrawler.transport.common.Transport;
 import iweb2.ch2.webcrawler.transport.file.FileTransport;
 import iweb2.ch2.webcrawler.transport.http.HTTPTransport;
+import iweb2.ch2.webcrawler.utils.DocumentIdUtils;
 import iweb2.ch2.webcrawler.utils.UrlGroup;
 import iweb2.ch2.webcrawler.utils.UrlUtils;
 
@@ -24,76 +24,95 @@ public class BasicWebCrawler {
 
     private URLFilter urlFilter;
     
+    private static final int DEFAULT_MAX_BATCH_SIZE = 10;
+    
+    private long DEFAULT_PAUSE_IN_MILLIS = 500;
+    private long pauseBetweenFetchesInMillis = DEFAULT_PAUSE_IN_MILLIS;
+    
+    /*
+     * Number of URLs to fetch and parse at a time.
+     */
+    private int maxBatchSize = DEFAULT_MAX_BATCH_SIZE;
+    
+    /*
+     * Number of fetched and parsed URLs so far.
+     */
+    private int processedUrlCount = 0;
+    
+    
     public BasicWebCrawler(CrawlData crawlData) {
         this.crawlData = crawlData;
     }
     
     public void addSeedUrls(List<String> seedUrls) {
+        int seedUrlDepth = 0;
         KnownUrlDB knownUrlsDB = crawlData.getKnownUrlsDB(); 
         for(String url : seedUrls) {
-            knownUrlsDB.addNewUrl(url);
+            knownUrlsDB.addNewUrl(url, seedUrlDepth);
         }
     }
-    
-    public void fetchAndProcess(int maxCrawls, int maxDocs) {
+
+    public void fetchAndProcess(int maxDepth, int maxDocs) {
         
-        crawlData.delete();
-        crawlData.init(); 
+        boolean maxUrlsLimitReached = false;
+        int documentGroup = 1;
         
-        int totalCrawlCount = 0;
-        DocumentIdSequence docIdSequence = new DocumentIdSequence();
-        while( totalCrawlCount < maxCrawls ) {
-            totalCrawlCount++;
-            // create a list of url that we are about to fetch
-            List<String> urls = selectURLsForNextCrawl(maxDocs); 
-            if( urls.size() == 0 ) {
-            	System.out.println("There are no unprocessed urls.");
-                break;
+        crawlData.init();
+        
+        if( maxBatchSize <= 0) {
+            throw new RuntimeException("Invalid value for maxBatchSize = " + maxBatchSize);
+        }
+        
+        for(int depth = 0; depth < maxDepth; depth++) {
+        
+            int lastProcessedBatchSize = maxBatchSize;
+            while( lastProcessedBatchSize == maxBatchSize && 
+                    maxUrlsLimitReached == false) {
+                
+                System.out.println("Starting url group: " + documentGroup + 
+                        ", current depth: " + depth +
+                        ", total known urls: " + 
+                            crawlData.getKnownUrlsDB().getTotalUrlCount() +
+                        ", maxDepth: " + maxDepth + 
+                        ", maxDocs: " + maxDocs +
+                        ", maxDocs per group: " + maxBatchSize +
+                        ", pause between docs: " + pauseBetweenFetchesInMillis + "(ms)");
+                
+                List<String> urlsToProcess = 
+                    selectNextBatchOfUrlsToCrawl(maxBatchSize, depth);
+                
+                /* for batch of urls create a separate document group */
+                String currentGroupId = String.valueOf(documentGroup);
+                fetchPages(urlsToProcess, crawlData.getFetchedDocsDB(), currentGroupId);
+                
+                // process downloaded data
+                processPages(currentGroupId, 
+                        crawlData.getProcessedDocsDB(), 
+                        crawlData.getFetchedDocsDB());
+                
+                // get processed doc, get links, add links to all-known-urls.dat
+                processLinks(currentGroupId, depth + 1, crawlData.getProcessedDocsDB());
+                
+                lastProcessedBatchSize = urlsToProcess.size();
+                processedUrlCount = processedUrlCount + lastProcessedBatchSize;
+                if( processedUrlCount >= maxDocs ) {
+                    maxUrlsLimitReached = true;
+                }
+                
+                System.out.println("Finished url group: " + documentGroup + 
+                        ", urls processed in this group: " + lastProcessedBatchSize + 
+                        ", current depth: " + depth +
+                        ", total urls processed: " + processedUrlCount);
+                
+                documentGroup += 1;
             }
 
-            /* for each crawl iteration create a separate group of documents */
-            String currentGroupId = docIdSequence.createNextGroupId();
-            fetchPages(urls, crawlData.getFetchedDocsDB(), docIdSequence);
+            if( maxUrlsLimitReached ) {
+                break;
+            }
             
-            // process downloaded data
-            processPages(currentGroupId, crawlData.getProcessedDocsDB(), crawlData.getFetchedDocsDB());
-            
-            // get processed doc, get links, add links to all-known-urls.dat
-            processLinks(currentGroupId, crawlData.getProcessedDocsDB());
-
-//            logger.debug("after crawl: " + totalCrawlCount + 
-//                    ", url total: " + crawlData.getKnownUrlsDB().findAllKnownUrls().size() + 
-//                    ", unprocessed urls: " + crawlData.getKnownUrlsDB().findUnprocessedUrls().size());            
         }
-        
-//        logger.debug("after crawl: " + totalCrawlCount + 
-//                ", url total: " + crawlData.getKnownUrlsDB().findAllKnownUrls().size() + 
-//                ", unprocessed urls: " + crawlData.getKnownUrlsDB().findUnprocessedUrls().size());            
-    }
-    
-    
-    
-    
-    /*
-     * Attempts to process all docs that were fetched before.
-     */
-    public void processFetchedData() {
-        // keep fetched data. delete everything else
-        crawlData.getProcessedDocsDB().delete();
-        crawlData.getPageLinkDB().delete();
-        crawlData.getKnownUrlsDB().delete();
-        crawlData.init(); // load whatever is left
-
-        FetchedDocsDB fetchedDocsDB = crawlData.getFetchedDocsDB();
-        ProcessedDocsDB processedDocsDB = crawlData.getProcessedDocsDB();
-        
-        // iterate through every directory with fetched/unprocessed documents and process them
-        for(String groupId : fetchedDocsDB.getAllGroupIds()) {
-            processPages(groupId, processedDocsDB, fetchedDocsDB);
-            // get processed doc, get links, add links to all-known-urls.dat
-            processLinks(groupId, processedDocsDB);
-        }
-    }
+     }
     
     private Transport getTransport(String protocol) {
         if( "http".equalsIgnoreCase(protocol) ) {
@@ -107,7 +126,9 @@ public class BasicWebCrawler {
         }
     }
     
-    public void fetchPages(List<String> urls, FetchedDocsDB fetchedDocsDB, DocumentIdSequence docIdSequence) {
+    private void fetchPages(List<String> urls, FetchedDocsDB fetchedDocsDB, String groupId) {
+        DocumentIdUtils docIdUtils = new DocumentIdUtils();
+        int docSequenceInGroup = 1;
         List<UrlGroup> urlGroups = UrlUtils.groupByProtocolAndHost(urls);
         for( UrlGroup urlGroup : urlGroups ) {
             Transport t = getTransport(urlGroup.getProtocol());
@@ -116,15 +137,20 @@ public class BasicWebCrawler {
                 for(String url : urlGroup.getUrls() ) {
                     try {
                         FetchedDocument doc = t.fetch(url);
-                        doc.setDocumentId(docIdSequence.createNextDocumentId());
+                        String documentId = docIdUtils.getDocumentId(groupId, docSequenceInGroup);
+                        doc.setDocumentId(documentId);
                         fetchedDocsDB.saveDocument(doc);
-                        pause();
+                        if( t.pauseRequired() ) {
+                            pause();
+                        }
                     }
                     catch(Exception e) {
                     	System.out.println("Failed to fetch document from url: '" + url + "'.\n"+
                     			e.getMessage());
-                        crawlData.getKnownUrlsDB().updateUrlStatus(url, KnownUrlEntry.STATUS_PROCESSED_ERROR);
+                        crawlData.getKnownUrlsDB().updateUrlStatus(
+                                url, KnownUrlEntry.STATUS_PROCESSED_ERROR);
                     }
+                    docSequenceInGroup++;
                 }
             }
             finally {
@@ -133,20 +159,28 @@ public class BasicWebCrawler {
         }
     }
 
+    public long getPauseBetweenFetchesInMillis() {
+        return pauseBetweenFetchesInMillis;
+    }
+
+    public void setPauseBetweenFetchesInMillis(long pauseBetweenFetchesInMillis) {
+        this.pauseBetweenFetchesInMillis = pauseBetweenFetchesInMillis;
+    }
+
     public void pause() {
-        long PAUSE = 250;
         try {
-            Thread.sleep(PAUSE);
+            Thread.sleep(pauseBetweenFetchesInMillis);
         }
         catch(InterruptedException e) {
             // do nothing
         }
     }
-        
 
-    public void processPages(String groupId, ProcessedDocsDB parsedDocsService, FetchedDocsDB fetchedDocsDB) {
-        DocumentFilter docFilter = new DocumentFilter();        
-        List<String> docIds = fetchedDocsDB.getDocumentIds(groupId);
+    private void processPages(String groupId, 
+            ProcessedDocsDB parsedDocsService, 
+            FetchedDocsDB fetchedDocsDB) {
+        
+    	List<String> docIds = fetchedDocsDB.getDocumentIds(groupId);
 
         for(String id : docIds) {
             FetchedDocument doc = null;
@@ -154,16 +188,12 @@ public class BasicWebCrawler {
                 doc = fetchedDocsDB.getDocument(id);
                 String url = doc.getDocumentURL();
                 
-                if( docFilter.duplicateContentExists(doc) == false ) {                                
-                    DocumentParser docParser = DocumentParserFactory
-                        .getInstance().getDocumentParser(doc.getContentType());
-                    ProcessedDocument parsedDoc = docParser.parse(doc);
-                    parsedDocsService.saveDocument(parsedDoc);
-                    crawlData.getKnownUrlsDB().updateUrlStatus(url, KnownUrlEntry.STATUS_PROCESSED_SUCCESS);                    
-                }
-                else {
-                    crawlData.getKnownUrlsDB().updateUrlStatus(url, KnownUrlEntry.STATUS_PROCESSED_SUCCESS);                    
-                }
+                DocumentParser docParser = DocumentParserFactory
+                    .getInstance().getDocumentParser(doc.getContentType());
+                ProcessedDocument parsedDoc = docParser.parse(doc);
+                parsedDocsService.saveDocument(parsedDoc);
+                crawlData.getKnownUrlsDB().updateUrlStatus(
+                        url, KnownUrlEntry.STATUS_PROCESSED_SUCCESS);                    
             }
             catch(Exception e) {
                 
@@ -183,7 +213,7 @@ public class BasicWebCrawler {
         }
     }
 
-    public void processLinks(String groupId, ProcessedDocsDB parsedDocs) {
+    private void processLinks(String groupId, int currentDepth, ProcessedDocsDB parsedDocs) {
         URLNormalizer urlNormalizer = new URLNormalizer();
         if( urlFilter == null ) {
             urlFilter = new URLFilter();
@@ -202,7 +232,7 @@ public class BasicWebCrawler {
                 String url = outlink.getLinkUrl();
                 String normalizedUrl = urlNormalizer.normalizeUrl(url);
                 if( urlFilter.accept(normalizedUrl) ) {
-                    crawlData.getKnownUrlsDB().addNewUrl(url); 
+                    crawlData.getKnownUrlsDB().addNewUrl(url, currentDepth); 
                     crawlData.getPageLinkDB().addLink(doc.getDocumentURL(), url);
                 }
             }
@@ -211,9 +241,20 @@ public class BasicWebCrawler {
         crawlData.getPageLinkDB().save();
     }
 
+    /**
+     * @deprecated use method that uses depth 
+     * 
+     * @param maxDocs
+     * @return
+     */
     public List<String> selectURLsForNextCrawl(int maxDocs) {
         return crawlData.getKnownUrlsDB().findUnprocessedUrls(maxDocs);
     }
+    
+    private List<String> selectNextBatchOfUrlsToCrawl(int maxBatchSize, int depth) {
+        return crawlData.getKnownUrlsDB().findUnprocessedUrls(maxBatchSize, depth);
+    }
+    
     
     public URLFilter getURLFilter() {
         return urlFilter;

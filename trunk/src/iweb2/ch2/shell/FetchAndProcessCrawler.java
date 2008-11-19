@@ -10,8 +10,8 @@ import java.util.List;
 
 public class FetchAndProcessCrawler {
 
-	public static final int DEFAULT_NUMBER_OF_CRAWLS = 3;
-	public static final int DEFAULT_NUMBER_OF_DOCS_PER_CRAWL = 100;
+	public static final int DEFAULT_MAX_DEPTH = 3;
+	public static final int DEFAULT_MAX_DOCS = 1000;
 	
 	//INSTANCE VARIABLES
 	// A reference to the crawled data
@@ -21,16 +21,16 @@ public class FetchAndProcessCrawler {
 	String rootDir;
 
 	// total number of iterations
-    int maxNumberOfCrawls = DEFAULT_NUMBER_OF_CRAWLS;
+    int maxDepth = DEFAULT_MAX_DEPTH;
     
     // max number of pages that will be fetched within every crawl/iteration.
-    int maxNumberOfDocsPerCrawl = DEFAULT_NUMBER_OF_DOCS_PER_CRAWL; 
+    int maxDocs = DEFAULT_MAX_DOCS; 
         
     List<String> seedUrls;
 
-    public FetchAndProcessCrawler(String arg1, int arg2, int arg3) {
+    public FetchAndProcessCrawler(String dir, int maxDepth, int maxDocs) {
     	
-    	rootDir = arg1;
+    	rootDir = dir;
 
     	if ( rootDir == null || rootDir.trim().length() == 0) {
     		
@@ -44,11 +44,11 @@ public class FetchAndProcessCrawler {
     	
     	rootDir = rootDir+System.getProperty("file.separator")+"crawl-" + System.currentTimeMillis();
     	
-    	maxNumberOfCrawls = arg2;
+    	this.maxDepth = maxDepth;
     	
-    	maxNumberOfDocsPerCrawl = arg3;
+    	this.maxDocs = maxDocs;
     	
-    	seedUrls = new ArrayList<String>();
+    	this.seedUrls = new ArrayList<String>();
     }
     
     public void run() {
@@ -61,21 +61,17 @@ public class FetchAndProcessCrawler {
         /* configure url filter to accept only file:// urls */
         URLFilter urlFilter = new URLFilter();
         urlFilter.setAllowFileUrls(true);
-        urlFilter.setAllowHttpUrls(false);
+        //urlFilter.setAllowHttpUrls(false);
+        urlFilter.setAllowHttpUrls(true);
         webCrawler.setURLFilter(urlFilter);
         
     	long t0 = System.currentTimeMillis();
 
         /* run crawl */
-        webCrawler.fetchAndProcess(maxNumberOfCrawls, maxNumberOfDocsPerCrawl);
+        webCrawler.fetchAndProcess(maxDepth, maxDocs);
 
-    	System.out.println("Timer (s): [Crawler fetched data] --> " + (System.currentTimeMillis()-t0)*0.001);
-    	t0 = System.currentTimeMillis();
-    	
-        /* process the collected data */
-        webCrawler.processFetchedData();
-        
-        System.out.println("Timer (s): [Crawler processed data] --> " + (System.currentTimeMillis()-t0)*0.001);
+        System.out.println("Timer (s): [Crawler processed data] --> " + 
+                (System.currentTimeMillis()-t0)*0.001);
     	
     }
     
@@ -222,28 +218,28 @@ public class FetchAndProcessCrawler {
 	 * @return the maxNumberOfCrawls
 	 */
 	public int getMaxNumberOfCrawls() {
-		return maxNumberOfCrawls;
+		return maxDepth;
 	}
 
 	/**
 	 * @param maxNumberOfCrawls the maxNumberOfCrawls to set
 	 */
 	public void setMaxNumberOfCrawls(int maxNumberOfCrawls) {
-		this.maxNumberOfCrawls = maxNumberOfCrawls;
+		this.maxDepth = maxNumberOfCrawls;
 	}
 
 	/**
 	 * @return the maxNumberOfDocsPerCrawl
 	 */
 	public int getMaxNumberOfDocsPerCrawl() {
-		return maxNumberOfDocsPerCrawl;
+		return maxDocs;
 	}
 
 	/**
 	 * @param maxNumberOfDocsPerCrawl the maxNumberOfDocsPerCrawl to set
 	 */
 	public void setMaxNumberOfDocsPerCrawl(int maxNumberOfDocsPerCrawl) {
-		this.maxNumberOfDocsPerCrawl = maxNumberOfDocsPerCrawl;
+		this.maxDocs = maxNumberOfDocsPerCrawl;
 	}
 
 	/**

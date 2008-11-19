@@ -100,4 +100,8 @@ public class FileTransport implements Transport {
     public void init() {
         // DO NOTHING
     }
+
+    public boolean pauseRequired() {
+        return false;
+    }
 }

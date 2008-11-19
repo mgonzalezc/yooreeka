@@ -100,15 +100,7 @@ public class DocRankMatrixBuilder implements CrawlDataProcessor {
 	        }
         }        
         
-        //TODO INTERNAL: remove. only for debugging.
-        System.out.println(">H before calculation:");
-        docMatrix.print();
-        
-        System.out.println(">H after calculation:");
         docMatrix.calculate();
-        docMatrix.print();
-        
-//        logger.info("matrix H is ready. Matrix size: " + pageMatrix.getMatrix().length);
         
         return docMatrix;
     }

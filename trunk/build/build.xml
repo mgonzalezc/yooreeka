@@ -146,7 +146,13 @@
           description="--> cleans up iweb2.classes and dist directories, if any.">
   <delete dir="${iweb2.classes}"/>
   <delete dir="${iweb2.distro}" />
-  <delete dir="${iweb2.deploy.lib}" />
+  <delete file="${iweb2.deploy.lib}/iweb2.jar"/>
+  <delete>
+    <fileset dir="${iweb2.deploy.lib}">
+      <patternset refid="thirdparty.jars"/>
+      <exclude name="bsh-2.0b4.jar"/>
+    </fileset>
+  </delete>
 </target>
 
 </project>

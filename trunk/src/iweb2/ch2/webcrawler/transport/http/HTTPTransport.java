@@ -149,4 +149,8 @@ public class HTTPTransport implements Transport {
         doc.setDocumentMetadata(new HashMap<String, String>());
         return doc;
     }
+
+    public boolean pauseRequired() {
+        return true;
+    }
 }

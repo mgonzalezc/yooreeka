@@ -1,6 +1,7 @@
 package iweb2.ch2.webcrawler.db;
 
 import iweb2.ch2.webcrawler.model.FetchedDocument;
+import iweb2.ch2.webcrawler.utils.DocumentIdUtils;
 import iweb2.ch2.webcrawler.utils.FileUtils;
 
 import java.io.BufferedInputStream;
@@ -25,6 +26,7 @@ public class FetchedDocsDB {
 
     private File rootDirFile = null;
     private Map<String, File> groupFiles = null;
+    private DocumentIdUtils docIdUtils = new DocumentIdUtils();
     
     public FetchedDocsDB(File rootDirFile) {
         this.rootDirFile = rootDirFile;
@@ -80,41 +82,6 @@ public class FetchedDocsDB {
         else {
             rootDirFile.mkdirs();
         }
-    }
-    
-    public String getMaxDocumentId() {
-        String groupId = getMaxGroupId();
-        String itemId = getMaxItemId(groupId);
-        return DocumentIdSequence.toDocumentId(groupId, itemId);
-    }
-    
-    private String getMaxGroupId() {
-        int maxGroupSequence = 0;
-        String maxGroupId = null;
-        for( File groupDirFile : groupFiles.values() ) {
-            String groupId = groupDirFile.getName();
-            int groupSequence = DocumentIdSequence.getGroupSequence(groupId);
-            if( groupSequence > maxGroupSequence ) {
-                maxGroupSequence = groupSequence;
-                maxGroupId = groupId;
-            }
-        }
-        return maxGroupId;
-    }
-    
-    private String getMaxItemId(String groupId) {
-        List<String> groupItemIds = getDocumentIds(groupId);
-        int maxId = 0;
-        String maxItemId = null;
-        for(String itemId : groupItemIds) {
-            int id = DocumentIdSequence.getItemSequence(itemId);
-            if( id > maxId ) {
-                maxId = id;
-                maxItemId = itemId;
-            }
-        }
-        return maxItemId;
-        
     }
 
     private String getFetchedFileExt() {
@@ -201,9 +168,8 @@ public class FetchedDocsDB {
     }
     
     public void saveDocument(FetchedDocument doc) {
-        
-        /* create group if it doesn't exist yet. */
-        String groupId = DocumentIdSequence.getGroupId(doc.getDocumentId());
+        /* create directory for current group if it doesn't exist yet. */
+        String groupId = docIdUtils.getDocumentGroupId(doc.getDocumentId());
         createGroup(groupId);
         
         File dataFile = getDataFile(doc.getDocumentId());
@@ -288,7 +254,7 @@ public class FetchedDocsDB {
             for(File f : dataFiles) {
                 String name = f.getName();
                 String itemId = name.substring(0, name.indexOf("."));
-                String documentId = DocumentIdSequence.toDocumentId(groupId, itemId);
+                String documentId = docIdUtils.getDocumentId(groupId, itemId);
                 documentIds.add(documentId);
             }
         }
@@ -304,9 +270,9 @@ public class FetchedDocsDB {
     }
     
     private File getDocumentFile(String documentId, String ext) {
-        String groupId = DocumentIdSequence.getGroupId(documentId);
+        String groupId = docIdUtils.getDocumentGroupId(documentId);
         File docDirFile = new File(rootDirFile, groupId);
-        String docFilename = DocumentIdSequence.getItemId(documentId) + ext;
+        String docFilename = docIdUtils.getDocumentSequence(documentId) + ext;
         File docFile = new File(docDirFile, docFilename);
         return docFile;
     }

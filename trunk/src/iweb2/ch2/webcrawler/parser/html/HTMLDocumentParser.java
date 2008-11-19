@@ -331,35 +331,38 @@ public class HTMLDocumentParser implements DocumentParser {
 
     
     /*
-     * Converts url value based on base and document urls.
+     * Builds absolute URL. For relative URLs will use source document URL and
+     * base URL.
      */
     private String buildUrl(String href, String baseUrl, String documentUrl) {
+        
         String url = null;
+        
         String protocol = extractProtocol(href);
+        
         if( protocol != null ) {
             url = href;
         }
+        else if( baseUrl != null ) {
+            url = baseUrl + href;
+        }
+        else if( href.startsWith("/") ) {
+            try {
+                URL docUrl = new URL(documentUrl);
+                if( docUrl.getPort() == -1 ) {
+                    url = docUrl.getProtocol() + "://" + docUrl.getHost() + href;
+                }
+                else {
+                    url = docUrl.getProtocol() + "://" + docUrl.getHost() + 
+                        ":" + docUrl.getPort() + href;
+                }
+            }
+            catch(MalformedURLException e) {
+                url = null;
+            }
+        }
         else {
-            // convert relative links into absolute urls using documentUrl and base URL.
-            if( href.startsWith("/") ) {
-                try {
-                    URL docUrl = new URL(documentUrl);
-                    if( docUrl.getPort() == -1 ) {
-                        url = docUrl.getProtocol() + "://" + docUrl.getHost() + href;
-                    }
-                    else {
-                        url = docUrl.getProtocol() + "://" + docUrl.getHost() + 
-                            ":" + docUrl.getPort() + href;
-                    }
-                }
-                catch(MalformedURLException e) {
-                    url = null;
-                }
-            }
-            else {
-                String parent = extractParent(documentUrl);
-                url = parent +  href;
-            }
+            url = extractParent(documentUrl) + href;
         }
         
         return url;

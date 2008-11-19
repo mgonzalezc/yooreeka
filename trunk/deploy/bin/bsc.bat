@@ -59,4 +59,6 @@ echo ---
 set JAVA_HOME
 echo ---
 
-%JAVA_HOME%\bin\java -Xms256M -Xmx1280M -cp %CLASSPATH% bsh.Interpreter
+
+@rem BeanShell uses "user.home" variable to locate file with startup instructions: ".bshrc".
+%JAVA_HOME%\bin\java -Duser.home=%IWEB2_HOME%\deploy\bin -Xms256M -Xmx1280M -cp %CLASSPATH% bsh.Interpreter

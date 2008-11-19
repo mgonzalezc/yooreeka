@@ -44,11 +44,13 @@ public class KnownUrlDB {
         
         this.dbFile = new File(rootDir, DB_FILENAME);
         try {
-            // creates a new file if the file doesn't exist
+            
+        	// creates a new file if the file doesn't exist
             dbFile.createNewFile();
-        }
-        catch(IOException e) {
-            throw new RuntimeException("Can't create db file: '" + dbFile.getAbsolutePath() + "'.", e);
+            
+        } catch(IOException e) {
+            throw new RuntimeException("Can't create db file: '" + 
+                    dbFile.getAbsolutePath() + "'.", e);
         }
         
         load();        
@@ -72,21 +74,36 @@ public class KnownUrlDB {
         }
     }
     
-    private void writeRecord(BufferedWriter w, KnownUrlEntry r) throws IOException {
-        w.write(r.getStatus() + "|" + r.getUrl());
+    private static final String FIELD_DELIMITER = "|";
+    
+    private void writeRecord(BufferedWriter w, KnownUrlEntry ku) 
+        throws IOException {
+        
+        w.write(ku.getStatus() + FIELD_DELIMITER +
+                String.valueOf(ku.getDepth()) + FIELD_DELIMITER + 
+                ku.getUrl() 
+                );
         w.newLine();
+        
     }
     
     private void load() {
         try {
-            InputStreamReader r = new InputStreamReader(new FileInputStream(dbFile), "UTF-8");
+            FileInputStream fis = new FileInputStream(dbFile);
+            InputStreamReader r = new InputStreamReader(fis, "UTF-8");
             BufferedReader br = new BufferedReader(r);
             String line = null;
             while( (line = br.readLine()) != null ) {
-                int delimiterIndex = line.indexOf("|");
+                int delimiterIndex = line.indexOf(FIELD_DELIMITER);
                 String status = line.substring(0, delimiterIndex);
-                String url = line.substring(delimiterIndex + "|".length());
-                addNewUrl(url, status);
+                int secondDelimiterIndex = line.indexOf(
+                        FIELD_DELIMITER, delimiterIndex + 1);
+                int depth = Integer.valueOf(line.substring(
+                        delimiterIndex + FIELD_DELIMITER.length(), 
+                        secondDelimiterIndex) );
+                String url = line.substring(
+                        secondDelimiterIndex + FIELD_DELIMITER.length());
+                loadUrl(url, status, depth);
             }
             br.close();
         }
@@ -120,15 +137,12 @@ public class KnownUrlDB {
                unprocessedURLs.containsKey(url);
     }
     
-    public boolean addNewUrl(String url) {
-        return addNewUrl(url, KnownUrlEntry.STATUS_UNPROCESSED);
-    }
-
-    public boolean addNewUrl(String url, String status) {
-        boolean isAdded =false;
-        
+    private void loadUrl(String url, String status, int depth) {
         if( isKnownUrl(url) == false ) {
-            KnownUrlEntry r = new KnownUrlEntry(url, status);
+            KnownUrlEntry r = new KnownUrlEntry();
+            r.setUrl(url);
+            r.setStatus( status );
+            r.setDepth(depth);
             if( KnownUrlEntry.STATUS_PROCESSED_SUCCESS.equalsIgnoreCase(status) ||
                 KnownUrlEntry.STATUS_PROCESSED_ERROR.equalsIgnoreCase(status) ) {
                 processedURLs.put(url, r);
@@ -137,13 +151,32 @@ public class KnownUrlDB {
                 unprocessedURLs.put(url, r);                
             }
             else {
-                throw new RuntimeException("Unsupported status value: '" + status + "'.");
+                throw new RuntimeException("Unsupported status value: '" + status + "', url: '" + url + "'.");
             }
+        }
+        else {
+            throw new RuntimeException("Duplicate url: '" + url + "'");
+        }
+    }
+    
+    
+    public boolean addNewUrl(String url, int depth) {
+        boolean isAdded =false;
+        
+        if( isKnownUrl(url) == false ) {
+            
+            String status = KnownUrlEntry.STATUS_UNPROCESSED;
+            KnownUrlEntry r = new KnownUrlEntry();
+            r.setUrl(url);
+            r.setStatus( status );
+            r.setDepth(depth);
+            unprocessedURLs.put(url, r);                
             isAdded = true;
         }
         else {
             isAdded = false;
         }
+        
         return isAdded;
     }
     
@@ -155,7 +188,7 @@ public class KnownUrlDB {
                 r.setStatus(status);
             }
             else {
-                r = new KnownUrlEntry(url, status);
+                throw new RuntimeException("Unknown url: '" + url);
             }
             processedURLs.put(url, r);            
         }
@@ -165,7 +198,7 @@ public class KnownUrlDB {
                 r.setStatus(status);
             }
             else {
-                r = new KnownUrlEntry(url, status);
+                throw new RuntimeException("Unknown url: '" + url);                
             }
             unprocessedURLs.put(url, r);
         }
@@ -198,17 +231,30 @@ public class KnownUrlDB {
         return new ArrayList<String>(unprocessedURLs.keySet());
     }
     
+    /**
+     * @deprecated will be removed. Use method with depth instead.
+     * 
+     * @param maxDocs
+     * @return
+     */
     public List<String> findUnprocessedUrls(int maxDocs) {
-        List<String> urls = new ArrayList<String>();
+        return findUnprocessedUrls(maxDocs, 0);
+    }
+    
+    public List<String> findUnprocessedUrls(int maxDocs, int depth) {
+        List<String> selectedUrls = new ArrayList<String>();
         
-        for(String key : unprocessedURLs.keySet() ) {
-            if( urls.size() >= maxDocs ) {
+        for(Map.Entry<String, KnownUrlEntry> e : unprocessedURLs.entrySet() ) {
+            if( selectedUrls.size() >= maxDocs ) {
                 break;
             }
-            urls.add(key);
+            KnownUrlEntry ku = e.getValue();
+            if( ku.getDepth() == depth ) {
+                selectedUrls.add(ku.getUrl());
+            }
         }
         
-        return urls;
+        return selectedUrls;
     }
     
 }

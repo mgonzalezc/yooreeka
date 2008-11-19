@@ -2,6 +2,7 @@ package iweb2.ch2.webcrawler.db;
 
 import iweb2.ch2.webcrawler.model.Outlink;
 import iweb2.ch2.webcrawler.model.ProcessedDocument;
+import iweb2.ch2.webcrawler.utils.DocumentIdUtils;
 import iweb2.ch2.webcrawler.utils.FileUtils;
 
 import java.io.BufferedInputStream;
@@ -26,6 +27,7 @@ public class ProcessedDocsDB {
     
     private File rootDirFile = null;
     private Map<String, File> groupFiles = null;
+    private DocumentIdUtils docIdUtils = new DocumentIdUtils();
     
     private enum FileType {
         CONTENT (".content", "content"),
@@ -108,8 +110,6 @@ public class ProcessedDocsDB {
         }
     }
     
-    
-    
     private File createDir(File parent, String dirName) {
         File newDir = new File(parent, dirName);
         if( !newDir.exists() ) {
@@ -155,7 +155,7 @@ public class ProcessedDocsDB {
      * @param doc
      */
     public void saveDocument(ProcessedDocument doc) {
-        String groupId = DocumentIdSequence.getGroupId(doc.getDocumentId());
+        String groupId = docIdUtils.getDocumentGroupId(doc.getDocumentId());
         createGroup(groupId);
         
         File contentFile = getContentFile(doc.getDocumentId());
@@ -294,6 +294,17 @@ public class ProcessedDocsDB {
         return documentIds;
     }
 
+    public List<ProcessedDocument> loadAllDocumentsInGroup(String groupId) {
+        List<ProcessedDocument> allDocsInGroup = new ArrayList<ProcessedDocument>();
+
+        for(String docId : getDocumentIds(groupId) ) {
+            ProcessedDocument doc = loadDocument(docId);
+            allDocsInGroup.add(doc);
+        }
+        
+        return allDocsInGroup;
+    }
+    
     public List<String> getDocumentIds(String groupId) {
         return getDocumentIds( groupFiles.get(groupId) );
     }
@@ -319,7 +330,7 @@ public class ProcessedDocsDB {
         for(File f : dataFiles) {
             String name = f.getName();
             String itemId = name.substring(0, name.indexOf(".")); 
-            String documentId = DocumentIdSequence.toDocumentId(groupId, itemId); 
+            String documentId = docIdUtils.getDocumentId(groupId, itemId); 
             documentIds.add(documentId);
         }
         return documentIds;
@@ -367,10 +378,10 @@ public class ProcessedDocsDB {
     }
     
     private File getDocumentFile(String documentId, FileType type) {
-        String groupId = DocumentIdSequence.getGroupId(documentId);
+        String groupId = docIdUtils.getDocumentGroupId(documentId);
         File groupDirFile = new File( rootDirFile, groupId );
         File docDirFile = new File(groupDirFile, type.getDir());
-        String itemId = DocumentIdSequence.getItemId(documentId);
+        String itemId = docIdUtils.getDocumentSequence(documentId);
         File docFile = new File(docDirFile, itemId + type.getExt());
         return docFile;
     }

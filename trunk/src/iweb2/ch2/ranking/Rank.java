@@ -1,14 +1,7 @@
 package iweb2.ch2.ranking;
 
-import iweb2.ch2.webcrawler.CrawlData;
-import iweb2.ch2.webcrawler.db.PageLinkDB;
-import iweb2.util.gui.GraphGui;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public abstract class Rank {
     
@@ -246,52 +239,4 @@ public abstract class Rank {
 		
 		return pR[i];
 	}
-	
-	
-    /**
-     * Shows page graph with corresponding page rank values.
-     */
-    public void visualize(CrawlData c) {
-         
-         
-         GraphGui gui = new GraphGui();
-         //String[] allDocs = getDocNames();
-         
-         PageRankMatrixH H = getH();
-         int n = H.getSize();
-         List<String> graphUrls = new ArrayList<String>(); 
-         for(int i = 0; i < n; i++ ) {
-             String pageUrl = H.getIndexMapping().getValue(i);
-             graphUrls.add(pageUrl);
-             //double[] xy = getCoordinates(i);
-             double[] xy = new double[] {10, 10 };
-             double pageRank = getPageRank(pageUrl);
-             String extraText = String.valueOf(pageRank);
-             gui.addNode(pageUrl, extraText, xy[0], xy[1]);
-         }
-         
-         // add edges between nodes
-         PageLinkDB linksDB = c.getPageLinkDB();
-         for(String sourceDocUrl : graphUrls) {
-             Set<String> targetNodeUrls = linksDB.getOutlinks(sourceDocUrl); 
-             for(String targetNodeUrl : targetNodeUrls) {
-                 gui.addEdge(sourceDocUrl, targetNodeUrl);                
-             }
-         }
-         gui.showGraph();
-    }
-
-   /*
-    * Contains hard-coded coordinates for graph nodes. 
-    */
-   private static Map<String, double[]> coordinates = 
-       new HashMap<String, double[]>();
-   
-   static {
-       coordinates.put("Doc1", new double[] {10, 10});
-       coordinates.put("Doc2", new double[] {10, 100});
-       coordinates.put("Doc3", new double[] {200, 10});        
-       coordinates.put("Doc4", new double[] {200, 100});        
-   }
-	
 }
