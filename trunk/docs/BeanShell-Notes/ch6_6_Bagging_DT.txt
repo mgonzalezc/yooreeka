@@ -135,6 +135,8 @@ bagee9.run();
 
 // -----------------------------------------------------------------------------
 
+/*
+
 Finally, given adequately powerful constituent classifiers, there is a sweet 
 spot of training data size for which diversity through input variation is most 
 effective. For example, if there is too little data, the gains achieved via 
@@ -142,3 +144,5 @@ a bagged ensemble cannot compensate for the decrease in accuracy of individual
 models, each of which now sees an even smaller training set. On the other end, 
 if the data set is extremely large and computation time is not an issue, even 
 a single flexible classifier can be quite adequate
+
+*/

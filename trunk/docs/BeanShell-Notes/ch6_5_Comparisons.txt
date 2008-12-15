@@ -36,10 +36,10 @@ FTest fTest = new FTest(nb_err.getResults(), dt_err.getResults(), nn_err.getResu
 
 fTest.evaluate();
 
-
-
-
+/*
 ________________________________________________________________________________________________________________
+
+
 
 bsh % McNemarTest mnTest1 = new McNemarTest(nb_err.getResults(), nn_err.getResults());
 McNemarTest mnTest2 = new McNemarTest(nb_err.getResults(), dt_err.getResults());
@@ -115,3 +115,4 @@ bsh %       _____________________________________________________
 bsh %
 ________________________________________________________________________________________________________________
 
+*/

@@ -1,6 +1,6 @@
 UserDataset ds = UserLoader.loadTrainingDataset();
 
-BaggingCreditClassifier bagClassifier = new BaggingCreditClassifier(ds, 0.7);
+BaggingCreditClassifier bagClassifier = new BaggingCreditClassifier(ds);
         
 // set verbose level to true to see more details.
 // ATTENTION: If set to true then every classification will be reported

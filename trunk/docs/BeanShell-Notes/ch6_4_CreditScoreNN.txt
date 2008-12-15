@@ -10,13 +10,6 @@ neuralNet.useDefaultAttributes();
         
 neuralNet.train();
 
-//----------------------------------------------------------------
-//
-// Classify a couple of samples from Training set
-//
-
-neuralNet.classify(ds.findUserByUsername("EX60"),true);
-
 //
 // Now, calculate error rate for test set
 //
@@ -26,6 +19,8 @@ UserDataset testDS = UserLoader.loadTestDataset();
 CreditErrorEstimator nn_err = new CreditErrorEstimator(testDS, neuralNet);
        
 nn_err.run();
+
+/*
 
 ============================================================
  Classification completed in 1.702 seconds.
@@ -64,3 +59,5 @@ ___________________________________________________________
   BD      0      0    451  15273    595
   DN      0      0      1     32   3155
 ============================================================
+
+*/

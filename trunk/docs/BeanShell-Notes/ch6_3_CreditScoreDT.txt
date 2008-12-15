@@ -12,12 +12,6 @@ decisionTree.train();
 
 //---> decisionTree.printTree();
 
-//----------------------------------------------------------------
-//
-// Classify a couple of samples from Training set
-//
-
-decisionTree.classify(ds.findUserByUsername("EX60"),true);
 
 //
 // Now, calculate error rate for test set
@@ -28,6 +22,8 @@ UserDataset testDS = UserLoader.loadTestDataset();
 CreditErrorEstimator dt_err = new CreditErrorEstimator(testDS, decisionTree);
        
 dt_err.run();
+
+/* 
 
 ====================================================================
  Total test dataset txns: 20000
@@ -64,3 +60,4 @@ ___________________________________________________________
   BD      0      0     10  15714    595
   DN      0      0      0     33   3155
   
+*/

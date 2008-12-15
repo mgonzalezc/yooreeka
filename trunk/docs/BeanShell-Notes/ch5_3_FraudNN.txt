@@ -42,7 +42,7 @@ nnFraudClassifier.save();
 
 // You can load a previously saved classifier
 
-NNFraudClassifier nnClone = NNFraudClassifier.loadClassifier(nnFraudClassifier.getName());
+NNFraudClassifier nnClone = NNFraudClassifier.load(nnFraudClassifier.getName());
 
 // Classify a couple of samples from Training set
 

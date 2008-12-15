@@ -14,10 +14,10 @@ delphiUC.setVerbose(true);
 //
 // Show me users like X (top 5)
 //
-NewsUser nu1 = ds.pickUser("Bob");
+iweb2.ch3.collaborative.data.NewsUser nu1 = ds.pickUser("Bob");
 delphiUC.findSimilarUsers(nu1);
 
-NewsUser nu2 = ds.pickUser("John");
+iweb2.ch3.collaborative.data.NewsUser nu2 = ds.pickUser("John");
 delphiUC.findSimilarUsers(nu2);
 
 //---------------------------------------------------------

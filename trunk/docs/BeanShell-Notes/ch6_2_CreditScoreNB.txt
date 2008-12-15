@@ -8,12 +8,6 @@ naiveBayes.useDefaultAttributes();
 
 naiveBayes.train();
 
-//----------------------------------------------------------------
-//
-// Classify a couple of samples from Training set
-//
-
-naiveBayes.classify(ds.findUserByUsername("EX60"),true);
 
 //
 // Now, calculate error rate for test set
@@ -26,7 +20,7 @@ CreditErrorEstimator nb_err = new CreditErrorEstimator(testDS, naiveBayes);
 nb_err.run();
 
 
-
+/*
 
 
 ==================================================================
@@ -64,3 +58,5 @@ ___________________________________________________________
   GD     12   1504  31756   3072      0
   BD      0      0      1  15723    595
   DN      0      0      0     33   3155
+
+*/
