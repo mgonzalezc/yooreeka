@@ -80,7 +80,7 @@ public class LuceneIndexBuilder implements CrawlDataProcessor {
  *  
  *      Uncomment the lines below to demonstrate the effect of boosting
  */     
-//		 if ( parsedDoc.getDocumentId().equals("g1:doc14")) {
+//		 if ( parsedDoc.getDocumentId().equals("g1-d13")) {
 //		    	doc.setBoost(2);
 //		 }
         

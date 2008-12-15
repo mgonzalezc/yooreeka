@@ -2,10 +2,10 @@ package iweb2.ch2.ranking;
 
 import iweb2.ch2.webcrawler.CrawlDataProcessor;
 import iweb2.ch2.webcrawler.model.ProcessedDocument;
+import iweb2.util.TermFreqMapUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -143,15 +143,11 @@ public class DocRankMatrixBuilder implements CrawlDataProcessor {
     }
     
     private Map<String, Integer> buildFreqMap(String[] terms, int[] freq) {
-    	
-        Map<String, Integer> freqMap = new HashMap<String, Integer>();
         
-        int n = (termsToKeep == 0)? TERMS_TO_KEEP: termsToKeep;
+        int topNTermsToKeep = (termsToKeep == 0)? TERMS_TO_KEEP: termsToKeep;
         
-        for(int i = 0; i < n; i++) {
-        
-        	freqMap.put(terms[i], freq[i]);
-        }
+        Map<String, Integer> freqMap = 
+            TermFreqMapUtils.getTopNTermFreqMap(terms, freq, topNTermsToKeep);
         
         return freqMap;
     }

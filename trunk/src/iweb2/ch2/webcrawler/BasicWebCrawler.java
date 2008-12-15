@@ -24,7 +24,7 @@ public class BasicWebCrawler {
 
     private URLFilter urlFilter;
     
-    private static final int DEFAULT_MAX_BATCH_SIZE = 10;
+    private static final int DEFAULT_MAX_BATCH_SIZE = 50;
     
     private long DEFAULT_PAUSE_IN_MILLIS = 500;
     private long pauseBetweenFetchesInMillis = DEFAULT_PAUSE_IN_MILLIS;
@@ -62,13 +62,16 @@ public class BasicWebCrawler {
         if( maxBatchSize <= 0) {
             throw new RuntimeException("Invalid value for maxBatchSize = " + maxBatchSize);
         }
-        
+
         for(int depth = 0; depth < maxDepth; depth++) {
-        
-            int lastProcessedBatchSize = maxBatchSize;
-            while( lastProcessedBatchSize == maxBatchSize && 
-                    maxUrlsLimitReached == false) {
-                
+
+            int urlsProcessedAtThisDepth = 0;
+            
+            boolean maxUrlsReached = false;
+            boolean noMoreUrlsAtThisDepth = false;
+            
+            while( maxUrlsReached == false && noMoreUrlsAtThisDepth == false) {
+
                 System.out.println("Starting url group: " + documentGroup + 
                         ", current depth: " + depth +
                         ", total known urls: " + 
@@ -80,6 +83,7 @@ public class BasicWebCrawler {
                 
                 List<String> urlsToProcess = 
                     selectNextBatchOfUrlsToCrawl(maxBatchSize, depth);
+                
                 
                 /* for batch of urls create a separate document group */
                 String currentGroupId = String.valueOf(documentGroup);
@@ -93,11 +97,9 @@ public class BasicWebCrawler {
                 // get processed doc, get links, add links to all-known-urls.dat
                 processLinks(currentGroupId, depth + 1, crawlData.getProcessedDocsDB());
                 
-                lastProcessedBatchSize = urlsToProcess.size();
-                processedUrlCount = processedUrlCount + lastProcessedBatchSize;
-                if( processedUrlCount >= maxDocs ) {
-                    maxUrlsLimitReached = true;
-                }
+                int lastProcessedBatchSize = urlsToProcess.size();
+                processedUrlCount += lastProcessedBatchSize;
+                urlsProcessedAtThisDepth += lastProcessedBatchSize; 
                 
                 System.out.println("Finished url group: " + documentGroup + 
                         ", urls processed in this group: " + lastProcessedBatchSize + 
@@ -105,8 +107,20 @@ public class BasicWebCrawler {
                         ", total urls processed: " + processedUrlCount);
                 
                 documentGroup += 1;
+
+                if( processedUrlCount >= maxDocs ) {
+                    maxUrlsLimitReached = true;
+                }
+                
+                if( lastProcessedBatchSize == 0 ) {
+                    noMoreUrlsAtThisDepth = true;
+                }
             }
 
+            if( urlsProcessedAtThisDepth == 0) {
+                break;
+            }
+            
             if( maxUrlsLimitReached ) {
                 break;
             }

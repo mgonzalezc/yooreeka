@@ -27,6 +27,8 @@ public class FetchAndProcessCrawler {
     int maxDocs = DEFAULT_MAX_DOCS; 
         
     List<String> seedUrls;
+    
+    URLFilter urlFilter;
 
     public FetchAndProcessCrawler(String dir, int maxDepth, int maxDocs) {
     	
@@ -49,7 +51,14 @@ public class FetchAndProcessCrawler {
     	this.maxDocs = maxDocs;
     	
     	this.seedUrls = new ArrayList<String>();
+    	
+    	/* default url filter configuration */
+    	this.urlFilter = new URLFilter();
+    	urlFilter.setAllowFileUrls(true);
+    	urlFilter.setAllowHttpUrls(true);
     }
+    
+    
     
     public void run() {
     	        
@@ -58,11 +67,6 @@ public class FetchAndProcessCrawler {
         BasicWebCrawler webCrawler = new BasicWebCrawler(crawlData);
         webCrawler.addSeedUrls(getSeedUrls());
 
-        /* configure url filter to accept only file:// urls */
-        URLFilter urlFilter = new URLFilter();
-        urlFilter.setAllowFileUrls(true);
-        //urlFilter.setAllowHttpUrls(false);
-        urlFilter.setAllowHttpUrls(true);
         webCrawler.setURLFilter(urlFilter);
         
     	long t0 = System.currentTimeMillis();
@@ -120,10 +124,26 @@ public class FetchAndProcessCrawler {
     	addUrl("file:///c:/iWeb2/data/ch02/world-03.html");
     	addUrl("file:///c:/iWeb2/data/ch02/world-04.html");
     	addUrl("file:///c:/iWeb2/data/ch02/world-05.html");
+    	
+    	setFilesOnlyUrlFilter();    	
 	}
     
+    public void setUrlFilter(URLFilter urlFilter) {
+        this.urlFilter = urlFilter;
+    }
+    
+    private void setFilesOnlyUrlFilter() {
+        /* configure url filter to accept only file:// urls */
+        URLFilter urlFilter = new URLFilter();
+        urlFilter.setAllowFileUrls(true);
+        urlFilter.setAllowHttpUrls(false);
+        setUrlFilter(urlFilter);
+    }
+    
     public void setUrls(String val) {
-    	
+
+        setFilesOnlyUrlFilter();
+        
     	this.seedUrls.clear();
     	
     	if (val.equalsIgnoreCase("biz")) {
