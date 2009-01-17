@@ -91,7 +91,7 @@ public class Delphi implements Recommender {
         } else {
         	
         	/**
-        	 * TODO Create an algorithm that would allow you to find 
+        	 * TODO: 3.x: Create an algorithm that would allow you to find 
         	 * similar users based on item similarities. 
         	 *   What kind of results do you get? 
         	 *   Is it space efficient? 

@@ -9,13 +9,15 @@ public class SigmoidNode extends BaseNode {
         super(nodeId);
     }
     
-    public double fireNeuron() {
+    @Override
+	public double fireNeuron() {
         // Sigmoid
     	y = Math.tanh(x);
         return y;
     }
     
-    public double fireNeuronDerivative() {
+    @Override
+	public double fireNeuronDerivative() {
         return (1 - y*y);
     }
 }

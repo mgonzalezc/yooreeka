@@ -71,7 +71,7 @@ public class MusicUser extends User {
 			if (commonItems > 0) {
 
 				//This is the RMSE, which is more like the distance
-				sim = Math.sqrt(sim/(double)commonItems);
+				sim = Math.sqrt(sim/commonItems);
 				
 				// Similarity should be between 0 and 1
 				// For the value 0, the two users are as disimilar as they come
@@ -100,7 +100,7 @@ public class MusicUser extends User {
 			// the users are similar or not. So, we let it return 0.
 			if (commonItems > 0) {
 				// Same as before (case 0)
-				sim = Math.sqrt(sim/(double)commonItems);
+				sim = Math.sqrt(sim/commonItems);
 	
 				// Similarity should be between 0 and 1
 				// For the value 0, the two users are as disimilar as they come

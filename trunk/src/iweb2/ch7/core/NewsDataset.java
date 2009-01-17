@@ -1,7 +1,7 @@
 package iweb2.ch7.core;
 
 
-import iweb2.ch7.recommendation.NewsUser;
+import iweb2.ch7.recommendation.NewsPortalUser;
 
 import java.util.Iterator;
 import java.util.List;
@@ -60,9 +60,9 @@ public interface NewsDataset extends java.io.Serializable {
 	
 	public List<NewsStory> findStoriesByTitle(String title);
 	
-	public NewsUser getUser(String userId);
+	public NewsPortalUser getUser(String userId);
 	
-	public List<NewsUser> getUsers();
+	public List<NewsPortalUser> getUsers();
 	
 	public void loadUsersAndRatings(String fileName);	
 	

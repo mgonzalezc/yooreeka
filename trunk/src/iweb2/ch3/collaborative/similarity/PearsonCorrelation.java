@@ -39,8 +39,8 @@ public class PearsonCorrelation {
 		for (int i=0; i<n; i++) {
 			
 			u = ds.getUser(uid[i]);
-			urA = (double) u.getItemRating(iA.getId()).getRating();
-			urB = (double) u.getItemRating(iB.getId()).getRating();
+			urA = u.getItemRating(iA.getId()).getRating();
+			urB = u.getItemRating(iB.getId()).getRating();
 			
 			x[i] = urA - aAvgR;
 			y[i] = urB - bAvgR;
@@ -107,7 +107,7 @@ public class PearsonCorrelation {
     		}
         }
 				
-		rho = xy / ((double)n*(sX*sY));
+		rho = xy / (n*(sX*sY));
 		
 		return rho;
 	}
@@ -119,7 +119,7 @@ public class PearsonCorrelation {
 			avg += xi;
 		}
 		
-		avg = avg/(double)v.length;
+		avg = avg/v.length;
 		
 		//System.out.print("Average: "+avg);
 		return avg;
@@ -132,7 +132,7 @@ public class PearsonCorrelation {
 			sigma += (xi - m)*(xi - m);
 		}
 		
-		sigma = sigma / (double)v.length;
+		sigma = sigma / v.length;
 		
 		//System.out.print("StdDev: "+Math.sqrt(sigma));
 		return Math.sqrt(sigma);

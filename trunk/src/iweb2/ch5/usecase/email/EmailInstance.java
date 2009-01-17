@@ -51,7 +51,8 @@ public class EmailInstance extends BaseInstance {
         attributes[0] = new StringAttribute(attrName, attrValue);
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return id;
     }
     

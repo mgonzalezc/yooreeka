@@ -18,7 +18,8 @@ public class FTest extends Test {
         calculate();
     }
     
-    protected void calculate() {
+    @Override
+	protected void calculate() {
         
         /*
          * Classifier accuracies: <Number of Correct classifications> / N
@@ -136,7 +137,8 @@ public class FTest extends Test {
         }
     }
 
-    public void evaluate() {
+    @Override
+	public void evaluate() {
     	print("_____________________________________________________");
         print("Evaluating classifiers " + 
                 c1.getClassifierId() + 

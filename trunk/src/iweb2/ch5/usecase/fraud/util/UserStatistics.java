@@ -111,7 +111,8 @@ public class UserStatistics implements java.io.Serializable {
     }
     
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "[userId="+userId+
             ", txnAmtMin=" + txnAmtMin +
             ", txnAmtMax=" + txnAmtMax +

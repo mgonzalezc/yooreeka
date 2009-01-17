@@ -15,7 +15,7 @@ public abstract class BaseSimilarityMatrix implements SimilarityMatrix {
     protected boolean useObjIdToIndexMapping = true;
     protected ValueToIndexMapping idMapping = new ValueToIndexMapping();
     
-    BaseSimilarityMatrix() {
+    protected BaseSimilarityMatrix() {
     }
     
     public void setUseObjIdToIndexMapping(boolean value) {

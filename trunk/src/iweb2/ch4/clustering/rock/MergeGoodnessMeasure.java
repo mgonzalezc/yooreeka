@@ -9,7 +9,7 @@ public class MergeGoodnessMeasure {
     /*
      * Threshold value that was used to identify neighbors among points. 
      */
-    private double th;
+    private double linkThreshold;
     
     /*
      * Intermediate value that is used in calculation of goodness measure 
@@ -18,7 +18,7 @@ public class MergeGoodnessMeasure {
     private double p;
     
     public MergeGoodnessMeasure(double th) {
-        this.th = th;
+        this.linkThreshold = th;
         this.p = 1.0 + 2.0 * f(th);
     }
 
@@ -27,35 +27,35 @@ public class MergeGoodnessMeasure {
         double b = Math.pow(nX, p);
         double c = Math.pow(nY, p);
         
-        return (double)nLinks / (a - b - c); 
+        return nLinks / (a - b - c); 
     }
     
     
     /**
      * This is just one of the possible implementations.
      * 
-     * @param th threshold value that was used to identify neighbors among points.    
+     * @param linkThreshold threshold value that was used to identify neighbors among points.    
      */
     private double f(double th) {
 
         /*
-         * This implementation assumes that th was a threshold for
+         * This implementation assumes that linkThreshold was a threshold for
          * similarity measure (as opposed to dissimilarity/distance). 
          */
         return (1.0 - th) / (1.0 + th);
     }
 
 	/**
-	 * @return the th
+	 * @return the linkThreshold
 	 */
 	public double getTh() {
-		return th;
+		return linkThreshold;
 	}
 
 	/**
-	 * @param th the th to set
+	 * @param linkThreshold the linkThreshold to set
 	 */
 	public void setTh(double th) {
-		this.th = th;
+		this.linkThreshold = th;
 	}
 }

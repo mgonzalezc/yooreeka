@@ -70,7 +70,7 @@ public class BootstrapTrainingSetBuilder {
         int selectedInstanceId=-1;
 
         //create the scale factor
-    	double scale = (double) (N/2) / 4.0d;
+    	double scale = (N/2) / 4.0d;
     	
         while (loop) {
 	    	

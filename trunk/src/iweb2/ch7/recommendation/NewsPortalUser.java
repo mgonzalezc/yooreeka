@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NewsUser {
+public class NewsPortalUser {
 
     private String id;
     private String name;
     private Map<String, NewsRating> allRatingsByStoryId = new HashMap<String, NewsRating>();
     
-    public NewsUser() {
+    public NewsPortalUser() {
     }
 
     public String getId() {

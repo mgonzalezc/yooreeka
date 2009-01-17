@@ -45,7 +45,8 @@ public class RMSEResult {
         this.error = error;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "RMSE (testSize=" + getTestSize() + 
         ", type=" + getType() + 
         ", similarityThreshold=" + getSimilarityThreshold() +

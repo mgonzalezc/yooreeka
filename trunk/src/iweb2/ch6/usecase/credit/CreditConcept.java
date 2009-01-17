@@ -16,7 +16,8 @@ public class CreditConcept extends BaseConcept {
         super(name);
     }
     
-    public Instance[] getInstances() {
+    @Override
+	public Instance[] getInstances() {
         throw new UnsupportedOperationException("not implemented.");
     }
 

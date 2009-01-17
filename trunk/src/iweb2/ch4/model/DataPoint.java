@@ -91,7 +91,8 @@ public class DataPoint {
         return label;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
     	return label + "(" + Arrays.toString(attributes) + ")";  
     }
     

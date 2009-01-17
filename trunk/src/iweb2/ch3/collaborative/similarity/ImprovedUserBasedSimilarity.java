@@ -9,8 +9,6 @@ public class ImprovedUserBasedSimilarity extends BaseSimilarityMatrix {
 	 * Unique identifier for serialization
 	 */
 	private static final long serialVersionUID = -4225607333671670946L;
-	
-    private double userSimilarityProbabilityValues[][] = null;
 
     public ImprovedUserBasedSimilarity(Dataset dataSet) {
     
@@ -29,14 +27,13 @@ public class ImprovedUserBasedSimilarity extends BaseSimilarityMatrix {
     // - start with 1
     // - have no gaps in sequence.
     // Otherwise we would have to have a mapping from userId/bookId into index
-    protected void calculate(Dataset dataSet) {
+    @Override
+	protected void calculate(Dataset dataSet) {
 
         int nUsers = dataSet.getUserCount();
-        int nBooks = dataSet.getItemCount();
         int nRatingValues = 5;
 
         similarityValues = new double[nUsers][nUsers];
-        userSimilarityProbabilityValues = new double[nUsers][nUsers];
         if( keepRatingCountMatrix ) {
             ratingCountMatrix = new RatingCountMatrix[nUsers][nUsers];
         }
@@ -72,21 +69,19 @@ public class ImprovedUserBasedSimilarity extends BaseSimilarityMatrix {
                     for (int matrixBandId = 1; matrixBandId <= maxBandId; matrixBandId++) {
                         double bandWeight = matrixBandId;
                         weightedDisagreements += bandWeight
-                                * (double) rcm.getBandCount(matrixBandId);
+                                * rcm.getBandCount(matrixBandId);
                     }
 
-                    double similarityValue = 1.0 - (weightedDisagreements / (double) totalCount);
+                    double similarityValue = 1.0 - (weightedDisagreements / totalCount);
 
                     // normalizing to [0..1]
                     double normalizedSimilarityValue = (similarityValue - 1.0 + maxBandId)
-                            / (double) maxBandId;
+                            / maxBandId;
 
                     similarityValues[u][v] = normalizedSimilarityValue;
                 } else {
                     similarityValues[u][v] = 0.0;
                 }
-                userSimilarityProbabilityValues[u][v] = (double) totalCount
-                        / (double) nBooks;
                 
                 // For large datasets
                 if( keepRatingCountMatrix ) {
@@ -97,10 +92,7 @@ public class ImprovedUserBasedSimilarity extends BaseSimilarityMatrix {
 
             // for u == v assign 1
             similarityValues[u][u] = 1.0; // RatingCountMatrix wasn't
-                                                // created for this case
-            userSimilarityProbabilityValues[u][u] = (double) userA
-                    .getAllRatings().size()
-                    / (double) nBooks;
+                                          // created for this case
         }
     }
 }

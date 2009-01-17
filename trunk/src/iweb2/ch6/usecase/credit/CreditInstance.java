@@ -57,7 +57,8 @@ public class CreditInstance implements Instance {
         return concept;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         StringWriter sw = new StringWriter();
         print(new PrintWriter(sw));
         return sw.toString();

@@ -21,7 +21,8 @@ public class DocRank extends Rank {
         docRankBuilder.run();
     }
     
-    public PageRankMatrixH getH() {
+    @Override
+	public PageRankMatrixH getH() {
         return docRankBuilder.getH();
     }
 }

@@ -19,7 +19,8 @@ public class ExcellentUserType extends UserType {
 		setRetirementAccounts(new int[] { 5, 6, 7, 8 }); 
 	}
 	
-    public String getUserType() {
+    @Override
+	public String getUserType() {
         return UserType.EXCELLENT;
     }
 }

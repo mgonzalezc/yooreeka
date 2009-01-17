@@ -237,7 +237,8 @@ public class KnownUrlDB {
      * @param maxDocs
      * @return
      */
-    public List<String> findUnprocessedUrls(int maxDocs) {
+    @Deprecated
+	public List<String> findUnprocessedUrls(int maxDocs) {
         return findUnprocessedUrls(maxDocs, 0);
     }
     

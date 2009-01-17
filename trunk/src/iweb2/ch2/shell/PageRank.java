@@ -14,6 +14,7 @@ public class PageRank extends Rank {
         pageRankBuilder.run();     
 	}
 	
+	@Override
 	public PageRankMatrixH getH() {
 		return pageRankBuilder.getH();
 	}

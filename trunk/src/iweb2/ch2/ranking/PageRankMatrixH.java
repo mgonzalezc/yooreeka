@@ -65,7 +65,7 @@ public class PageRankMatrixH {
                 
             		if( matrix[i][j] > 0 ) {
                     
-            			matrix[i][j] = (double)matrix[i][j] / (double) rowSum;
+            			matrix[i][j] = matrix[i][j] / rowSum;
                     }
                 }
             	

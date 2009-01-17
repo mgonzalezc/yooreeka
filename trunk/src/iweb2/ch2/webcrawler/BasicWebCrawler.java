@@ -261,7 +261,8 @@ public class BasicWebCrawler {
      * @param maxDocs
      * @return
      */
-    public List<String> selectURLsForNextCrawl(int maxDocs) {
+    @Deprecated
+	public List<String> selectURLsForNextCrawl(int maxDocs) {
         return crawlData.getKnownUrlsDB().findUnprocessedUrls(maxDocs);
     }
     

@@ -53,7 +53,8 @@ public class NBCreditClassifier extends NaiveBayes {
     }
     
     
-    public Concept classify(Instance instance) {
+    @Override
+	public Concept classify(Instance instance) {
         return super.classify(instance);
     }
     

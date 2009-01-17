@@ -51,7 +51,8 @@ public class Attribute {
         }
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "[name="+this.name + 
             ", value=" + value + 
             ", isText=" + this.isText() + 

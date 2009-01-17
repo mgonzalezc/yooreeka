@@ -257,7 +257,7 @@ public class NaiveBayes implements Classifier {
 					// Can you think of a better choice?
 					cP *= ((double) 1 / (tSet.getSize()+1));
 				} else {
-				    cP *= (double)(aV.getCount()/conceptPriors.get(c));
+				    cP *= (aV.getCount()/conceptPriors.get(c));
 				}
 			}
 		}	

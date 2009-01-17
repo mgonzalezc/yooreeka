@@ -109,7 +109,8 @@ public class DTCreditClassifier extends DecisionTreeClassifier {
 
     }
     
-    public boolean train() {
+    @Override
+	public boolean train() {
         boolean result = super.train();
         if( result && pruneAfterTraining ) {
             this.pruneTree();

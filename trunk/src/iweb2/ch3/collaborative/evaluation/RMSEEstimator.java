@@ -46,7 +46,7 @@ public class RMSEEstimator {
         
         double sum = 0.0;
         
-        Dataset ds = (Dataset)delphi.getDataset();
+        Dataset ds = delphi.getDataset();
 
         int totalSamples = testRatings.size();
         
@@ -73,10 +73,10 @@ public class RMSEEstimator {
 //                        ", predicted: " + String.valueOf(predictedItemRating));
 //            }
 
-            sum += Math.pow((predictedItemRating - (double)r.getRating()), 2);
+            sum += Math.pow((predictedItemRating - r.getRating()), 2);
             
         }
-        double rmse = Math.sqrt(sum / (double) totalSamples); 
+        double rmse = Math.sqrt(sum / totalSamples); 
 
         if( verbose ) {
             System.out.println("RMSE:" + rmse);

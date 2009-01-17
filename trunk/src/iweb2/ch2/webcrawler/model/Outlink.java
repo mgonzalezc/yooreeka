@@ -19,7 +19,8 @@ public class Outlink {
         return text;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "[link:" + linkUrl + ", text:" + text + "]";
     }
 }

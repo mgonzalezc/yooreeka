@@ -53,7 +53,8 @@ public class PredictedItemRating {
         return bd.setScale(scale, RoundingMode.HALF_UP).doubleValue();
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return this.getClass().getSimpleName() + "[userId: " + userId
                 + ", itemId: " + itemId + ", rating: " + rating + "]";
     }

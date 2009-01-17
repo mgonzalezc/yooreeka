@@ -106,7 +106,8 @@ public class ProcessedDocument {
         this.documentType = docType;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "[docId: " + documentId +
                 ", type: " + documentType +
                 ", url: " + documentURL + 

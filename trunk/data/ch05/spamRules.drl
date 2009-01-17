@@ -1,6 +1,6 @@
 package demo;
  
-import iweb2.ch5.classification.data.Email;
+import iweb2.ch5.usecase.email.data.Email;
 import iweb2.ch5.classification.rules.ClassificationResult;
 
 global ClassificationResult classificationResult;

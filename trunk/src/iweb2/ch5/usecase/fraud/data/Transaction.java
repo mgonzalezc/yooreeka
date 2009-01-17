@@ -62,7 +62,8 @@ public class Transaction implements java.io.Serializable {
         ":" + fraud;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return toExternalString();
     }
 

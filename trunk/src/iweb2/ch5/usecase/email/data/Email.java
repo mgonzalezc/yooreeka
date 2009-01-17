@@ -104,7 +104,8 @@ public class Email {
 
 
 
-    public String toString() {
+    @Override
+	public String toString() {
         return "id: " + id + "\n" + 
                "from: " + from + "\n" +
                "to: " + to + "\n" +

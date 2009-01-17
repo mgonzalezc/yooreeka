@@ -45,6 +45,7 @@ public class BaseConcept implements Concept {
 		this.parent = parent;
 	}
 	
+	@Override
 	public String toString() {
 	    return name;
 	}

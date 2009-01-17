@@ -26,7 +26,8 @@ public class EmailClassifier extends NaiveBayes {
         this.topNTerms = topNTerms;
     }
         
-    public boolean train() {
+    @Override
+	public boolean train() {
         
         if( emailDataset.getSize() == 0) {
             System.out.println("Can't train classifier - training dataset is empty.");
@@ -42,7 +43,8 @@ public class EmailClassifier extends NaiveBayes {
         return true;
     }
 
-    protected void calculateConditionalProbabilities() {
+    @Override
+	protected void calculateConditionalProbabilities() {
 
         p = new HashMap<Concept, Map<Attribute, AttributeValue>>();
         
@@ -76,7 +78,8 @@ public class EmailClassifier extends NaiveBayes {
         }       
     }
     
-    public double getProbability(Instance i, Concept c) {
+    @Override
+	public double getProbability(Instance i, Concept c) {
         
         double cP=1;
 
@@ -97,7 +100,7 @@ public class EmailClassifier extends NaiveBayes {
                 
                 } else {
                                   
-                    cP *= (double)((double)bestAttributeValue.getCount()/conceptPriors.get(c));
+                    cP *= (bestAttributeValue.getCount()/conceptPriors.get(c));
                 }
             }
         }   
@@ -140,7 +143,8 @@ public class EmailClassifier extends NaiveBayes {
         return aMap.get(bestMatch);
     }
     
-    public Concept classify(Instance instance) {
+    @Override
+	public Concept classify(Instance instance) {
         return super.classify(instance);
     }
     

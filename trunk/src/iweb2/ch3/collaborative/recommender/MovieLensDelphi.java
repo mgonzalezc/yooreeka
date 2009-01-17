@@ -232,7 +232,7 @@ public class MovieLensDelphi implements Recommender {
             }
             	
         	if (sumN > 0) {
-        		itemRating = itemAvgRating - (weightedDeltaSum/(double) sumN);
+        		itemRating = itemAvgRating - (weightedDeltaSum/sumN);
         	}
         }
 

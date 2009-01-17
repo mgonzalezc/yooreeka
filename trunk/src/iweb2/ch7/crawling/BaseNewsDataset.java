@@ -3,7 +3,7 @@ package iweb2.ch7.crawling;
 import iweb2.ch7.core.NewsDataset;
 import iweb2.ch7.core.NewsStory;
 import iweb2.ch7.recommendation.NewsRating;
-import iweb2.ch7.recommendation.NewsUser;
+import iweb2.ch7.recommendation.NewsPortalUser;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 public abstract class BaseNewsDataset implements NewsDataset {
     
-    private Map<String, NewsUser> newsUsers = new HashMap<String, NewsUser>();
+    private Map<String, NewsPortalUser> newsUsers = new HashMap<String, NewsPortalUser>();
     private List<NewsRating> allRatings = new ArrayList<NewsRating>();
 
     private String userAndRatingsFilename = null;
@@ -39,7 +39,7 @@ public abstract class BaseNewsDataset implements NewsDataset {
     }
     
     
-    public NewsUser getUser(String userId) {
+    public NewsPortalUser getUser(String userId) {
         return newsUsers.get(userId);
     }
     
@@ -73,7 +73,7 @@ public abstract class BaseNewsDataset implements NewsDataset {
     
     public void loadUsersAndRatings(BufferedReader bR) throws IOException {
         
-        Map<String, NewsUser> loadedUsers = new HashMap<String, NewsUser>();
+        Map<String, NewsPortalUser> loadedUsers = new HashMap<String, NewsPortalUser>();
         
         String line = null;
         
@@ -97,9 +97,9 @@ public abstract class BaseNewsDataset implements NewsDataset {
             String storyTitle = data[2];
             int rating = Integer.parseInt(data[3]);
 
-            NewsUser user = loadedUsers.get(userId); 
+            NewsPortalUser user = loadedUsers.get(userId); 
             if( user == null ) {
-                user = new NewsUser();
+                user = new NewsPortalUser();
                 user.setId(userId);
                 user.setName(userName);
                 loadedUsers.put(userId, user);
@@ -114,13 +114,13 @@ public abstract class BaseNewsDataset implements NewsDataset {
             user.addRating(r);
         }
 
-        for(NewsUser u : loadedUsers.values()) {
+        for(NewsPortalUser u : loadedUsers.values()) {
             // will add users and ratings
             addUser(u);
         }
     }
 
-    private void addUser(NewsUser newsUser) {
+    private void addUser(NewsPortalUser newsUser) {
 
         newsUsers.put(newsUser.getId(), newsUser);
          
@@ -132,7 +132,7 @@ public abstract class BaseNewsDataset implements NewsDataset {
     
     private void addNewsRating(NewsRating newsRating) {
 
-        NewsUser newsUser = newsUsers.get(newsRating.getUserId());
+        NewsPortalUser newsUser = newsUsers.get(newsRating.getUserId());
         NewsStory newsStory = getStoryById(newsRating.getStoryId());
         assert(newsUser != null);
         assert(newsStory != null);
@@ -165,8 +165,8 @@ public abstract class BaseNewsDataset implements NewsDataset {
         return result;
     }
     
-    public List<NewsUser> getUsers() {
-        return new ArrayList<NewsUser>( newsUsers.values() );
+    public List<NewsPortalUser> getUsers() {
+        return new ArrayList<NewsPortalUser>( newsUsers.values() );
     }
     
 }

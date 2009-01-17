@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.WindowConstants;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -125,7 +126,8 @@ public class NewsUI extends JPanel
             }
         }
 
-        public String toString() {
+        @Override
+		public String toString() {
             return title;
         }
     
@@ -237,7 +239,7 @@ public class NewsUI extends JPanel
 //            	}
 
             	JFrame frame = new JFrame(ui.getLoadedDataset().getDatasetName());
-            	frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            	frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
             	frame.add(ui);
             	frame.pack();
             	frame.setVisible(true);

@@ -16,7 +16,8 @@ public class NewsCategory implements java.io.Serializable {
     
     private String name;
     
-    public String toString() {
+    @Override
+	public String toString() {
         return name;
     }
     public NewsCategory(String name) {

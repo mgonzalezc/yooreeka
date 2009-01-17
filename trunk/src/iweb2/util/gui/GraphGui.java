@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 import org.jgraph.JGraph;
 import org.jgraph.graph.DefaultCellViewFactory;
@@ -48,7 +49,7 @@ public class GraphGui {
         JFrame frame = new JFrame();
         frame.getContentPane().add(new JScrollPane(graph));
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
@@ -59,8 +60,8 @@ public class GraphGui {
         allCells.addAll(edgeCells);
         
         DefaultGraphCell[] cells = 
-            (DefaultGraphCell[])allCells.toArray(
-                    new DefaultGraphCell[nodeCells.size()]);
+            allCells.toArray(
+		        new DefaultGraphCell[nodeCells.size()]);
         
         graph.getGraphLayoutCache().insert(cells);
         graph.setEditable(false);

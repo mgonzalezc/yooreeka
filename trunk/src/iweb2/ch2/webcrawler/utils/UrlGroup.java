@@ -33,7 +33,8 @@ public class UrlGroup {
         return host;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "[protocol: " + protocol + ", host: " + host + ", url count: " + urls.size() + "]";
     }
 }

@@ -138,9 +138,6 @@ public class NewsData {
         return new HTMLContent(docName, "C:/iWeb2/data/ch02/" + docName);
     }
     
-    
-
-    
     /**
      * Returns array of new ContentItem instances for every document listed in 
      * <code>DOC_SAMPLES</code> array.

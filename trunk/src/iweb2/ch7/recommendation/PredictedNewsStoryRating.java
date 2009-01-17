@@ -53,7 +53,8 @@ public class PredictedNewsStoryRating {
         return bd.setScale(scale, RoundingMode.HALF_UP).doubleValue();
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return this.getClass().getSimpleName() + "[userId: " + userId
                 + ", storyId: " + storyId + ", rating: " + rating + "]";
     }
@@ -109,7 +110,7 @@ public class PredictedNewsStoryRating {
     }
     
     public static void printUserRecommendations(
-            NewsUser user, 
+            NewsPortalUser user, 
             List<PredictedNewsStoryRating> recommendedStories) {
         System.out.println("\nRecommendations for user " + user.getName() + ":\n");
         for(PredictedNewsStoryRating r : recommendedStories) {

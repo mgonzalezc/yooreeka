@@ -307,6 +307,13 @@ public class NNFraudClassifier
 		return verbose;
 	}
 
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+	
 	/**
 	 * @param verbose the verbose to set
 	 */

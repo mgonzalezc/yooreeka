@@ -46,7 +46,8 @@ public class Rating implements java.io.Serializable {
         this.rating = rating;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return this.getClass().getSimpleName() + "[userId: " + userId
                 + ", itemId: " + itemId + ", rating: " + rating + "]";
     }

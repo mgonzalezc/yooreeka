@@ -66,7 +66,7 @@ public class DiggStoryItem extends Item {
     
     public void print() {
     	System.out.println("---------------------------------------------------------------------");
-    	System.out.println("Category: "+this.getCategory()+"     -- Topic: "+this.getTopic());
+    	System.out.println("Category: "+this.getCategory()+"     -- NewsCategory: "+this.getTopic());
     	System.out.println("Title: "+this.getTitle());
     	System.out.println("_____________________________________________________________________");
     	System.out.println("Description:\n"+this.getDescription());

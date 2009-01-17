@@ -23,7 +23,8 @@ public class DiggCategory extends Container {
 
     // Note that default Container.toString() implementation in jigg library
     // won't work with digg api call. 
-    public String toString() {
+    @Override
+	public String toString() {
         return getShortName();
     }
     

@@ -25,7 +25,8 @@ public class McNemarTest extends Test {
         calculate();
     }
     
-    protected void calculate() {
+    @Override
+	protected void calculate() {
         int n = c1.getN();
         
         
@@ -68,7 +69,8 @@ public class McNemarTest extends Test {
         }
     }
 
-    public void evaluate() {
+    @Override
+	public void evaluate() {
     	
         print("_____________________________________________________");
         print("Evaluating classifiers " + c1.getClassifierId() + 

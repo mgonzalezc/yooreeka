@@ -170,7 +170,8 @@ public class XyGui extends ApplicationFrame {
      *
      * @param event  information about the window event.
      */
-    public void windowClosing(WindowEvent event) {
+    @Override
+	public void windowClosing(WindowEvent event) {
         if (event.getWindow() == this) {
             dispose();
             

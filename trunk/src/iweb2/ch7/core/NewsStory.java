@@ -132,7 +132,6 @@ public class NewsStory implements java.io.Serializable {
     }
 
     public NewsCategory getExpectedTopic() {
-        //TODO: this is a hack for now. Need to fix it.
         if( expectedTopic == null ) {
             expectedTopic = newsCategory;
         }

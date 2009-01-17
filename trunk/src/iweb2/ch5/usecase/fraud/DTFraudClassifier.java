@@ -39,7 +39,8 @@ public class DTFraudClassifier extends DecisionTreeClassifier {
         this.instanceBuilder = instanceBuilder;
     }
     
-    protected Concept createConcept(String category) {
+    @Override
+	protected Concept createConcept(String category) {
         return new TransactionConcept(category);
     }
     

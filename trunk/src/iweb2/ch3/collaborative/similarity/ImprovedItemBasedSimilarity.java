@@ -18,8 +18,8 @@ public class ImprovedItemBasedSimilarity extends BaseSimilarityMatrix {
         calculate(dataSet);
     }
     
-    protected void calculate(Dataset dataSet) {
-        int nUsers = dataSet.getUserCount();
+    @Override
+	protected void calculate(Dataset dataSet) {
         int nItems = dataSet.getItemCount();
         int nRatingValues = 5;
         similarityValues = new double[nItems][nItems];
@@ -32,8 +32,6 @@ public class ImprovedItemBasedSimilarity extends BaseSimilarityMatrix {
             }
         }
         
-        
-        double[][] itemSimilarityProbabilityValues = new double[nItems][nItems];
         if( keepRatingCountMatrix ) {
             ratingCountMatrix = new RatingCountMatrix[nItems][nItems];
         }
@@ -60,21 +58,19 @@ public class ImprovedItemBasedSimilarity extends BaseSimilarityMatrix {
                     for (int matrixBandId = 1; matrixBandId <= maxBandId; matrixBandId++) {
                         double bandWeight = matrixBandId;
                         weightedDisagreements += bandWeight
-                                * (double) rcm.getBandCount(matrixBandId);
+                                * rcm.getBandCount(matrixBandId);
                     }
 
                     double similarityValue = 1.0 - (weightedDisagreements / 
-                            (double) totalCount);
+                            totalCount);
 
                     // normalizing to [0..1]
                     double normalizedSimilarityValue = (similarityValue - 1.0 + maxBandId)
-                            / (double) maxBandId;
+                            / maxBandId;
                     similarityValues[u][v] = normalizedSimilarityValue;
                 } else {
                     similarityValues[u][v] = 0.0;
                 }
-                itemSimilarityProbabilityValues[u][v] = 
-                       (double) agreementCount / (double) nUsers;
 
                 // For large datasets
                 if( keepRatingCountMatrix ) {
@@ -85,9 +81,6 @@ public class ImprovedItemBasedSimilarity extends BaseSimilarityMatrix {
             // for u == v assign 1
             // ratingCountMatrix wasn't created for this case
             similarityValues[u][u] = 1.0;
-            itemSimilarityProbabilityValues[u][u] = (double) itemA
-                    .getAllRatings().size()
-                    / (double) nUsers;
         }
     }
 }

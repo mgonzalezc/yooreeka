@@ -135,7 +135,8 @@ public class Cluster {
         return "{" + buf.toString() + "}";
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return getElementsAsString();
     }
 

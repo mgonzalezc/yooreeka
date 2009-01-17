@@ -21,7 +21,8 @@ public class MovieLensItemSimilarity extends BaseSimilarityMatrix  {
         calculate(ds);
     }
 
-    protected void calculate(Dataset dataSet) {
+    @Override
+	protected void calculate(Dataset dataSet) {
     	
         int nItems = dataSet.getItemCount();
         

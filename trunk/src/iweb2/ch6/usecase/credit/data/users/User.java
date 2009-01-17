@@ -200,7 +200,8 @@ public class User {
         ":" + income;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return toExternalString();
     }
 

@@ -29,7 +29,8 @@ public class CustomAnalyzer extends StandardAnalyzer {
   public CustomAnalyzer() {
       super(CustomAnalyzer.MERGED_STOP_WORDS);
   }
-  public TokenStream tokenStream(String fieldName, Reader reader) {
+  @Override
+public TokenStream tokenStream(String fieldName, Reader reader) {
       return new PorterStemFilter(super.tokenStream(fieldName, reader));
   }
 }

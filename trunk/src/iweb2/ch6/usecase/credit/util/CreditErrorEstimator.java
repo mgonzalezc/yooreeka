@@ -138,7 +138,7 @@ public class CreditErrorEstimator {
         	long tEnd = System.currentTimeMillis();
         	
             // SUMMARY
-        	System.out.println(" Classification completed in "+(double)0.001*(tEnd-tStart)+" seconds.\n");
+        	System.out.println(" Classification completed in "+0.001*(tEnd-tStart)+" seconds.\n");
         	int totalCount = testDS.getSize();
         	
             System.out.println(" Total test dataset txns: " + totalCount );

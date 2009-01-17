@@ -60,7 +60,8 @@ public class ClassificationResult {
         return true;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         String name = null;
         if( concept != null ) {
             name = concept.getName();

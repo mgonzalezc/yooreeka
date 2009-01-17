@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * @deprecated not used at the moment.
  */
+@Deprecated
 class Recommender {
 
 //    private static final Logger logger = Logger.getLogger(Recommender.class);

@@ -47,7 +47,8 @@ public class SimilarCluster {
         });        
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "[clusterKey=" + this.clusterKey + ",goodness=" + this.goodness+ "]"; 
     }
 }

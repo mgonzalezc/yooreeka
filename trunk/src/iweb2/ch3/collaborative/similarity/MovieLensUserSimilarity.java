@@ -19,7 +19,8 @@ public class MovieLensUserSimilarity extends BaseSimilarityMatrix  {
         calculate(ds);
     }
 
-    protected void calculate(Dataset dataSet) {
+    @Override
+	protected void calculate(Dataset dataSet) {
 
         int nUsers = dataSet.getUserCount();
         

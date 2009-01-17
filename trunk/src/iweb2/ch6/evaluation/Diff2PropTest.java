@@ -15,7 +15,8 @@ public class Diff2PropTest extends Test {
         calculate();
     }
     
-    protected void calculate() {
+    @Override
+	protected void calculate() {
     	
         double n = c1.getN();
         double p = 0.5 * (c1.getAccuracy() + c2.getAccuracy());
@@ -46,7 +47,8 @@ public class Diff2PropTest extends Test {
         }
     }
 
-    public void evaluate() {
+    @Override
+	public void evaluate() {
     	
     	print("_____________________________________________________");
         print("Evaluating classifiers " + c1.getClassifierId() + 

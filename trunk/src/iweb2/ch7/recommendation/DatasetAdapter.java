@@ -21,8 +21,8 @@ public class DatasetAdapter implements Dataset {
     
     private Map<Integer, User> users = new HashMap<Integer, User>();
 
-    private ObjectToIndexMapping<NewsUser> userMapping = 
-        new ObjectToIndexMapping<NewsUser>();
+    private ObjectToIndexMapping<NewsPortalUser> userMapping = 
+        new ObjectToIndexMapping<NewsPortalUser>();
 
     private Map<Integer, Item> items = new HashMap<Integer, Item>();
     
@@ -44,13 +44,13 @@ public class DatasetAdapter implements Dataset {
         }
         
         // convert NewsUser and NewsRating into User and Rating
-        for(NewsUser newsUser : newsDataset.getUsers() ) {
+        for(NewsPortalUser newsUser : newsDataset.getUsers() ) {
             loadUser(newsUser);
         }
     }
     
     private void loadRating(NewsRating newsRating) {
-        NewsUser newsUser = newsDataset.getUser(newsRating.getUserId());
+        NewsPortalUser newsUser = newsDataset.getUser(newsRating.getUserId());
         NewsStory newsStory = newsDataset.getStoryById(newsRating.getStoryId());
         
         assert(newsUser != null);
@@ -74,7 +74,7 @@ public class DatasetAdapter implements Dataset {
     }
     
     // createUser
-    private void loadUser(NewsUser newsUser) {
+    private void loadUser(NewsPortalUser newsUser) {
 
        // add new User if needed
         Integer userId = userMapping.getIndex(newsUser);
@@ -108,7 +108,7 @@ public class DatasetAdapter implements Dataset {
     }
 
     public User getUserForNewsUserId(String userId) {
-        NewsUser newsUser = newsDataset.getUser(userId);
+        NewsPortalUser newsUser = newsDataset.getUser(userId);
         Integer id = userMapping.getIndex(newsUser);
         return users.get(id); 
     }
@@ -118,7 +118,7 @@ public class DatasetAdapter implements Dataset {
         return storyMapping.getObject(itemId); 
     }
 
-    public NewsUser getUserForNewsUserId(Integer userId) {
+    public NewsPortalUser getUserForNewsUserId(Integer userId) {
         return userMapping.getObject(userId); 
     }
 

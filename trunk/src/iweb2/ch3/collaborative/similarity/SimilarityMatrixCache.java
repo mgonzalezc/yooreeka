@@ -2,7 +2,6 @@ package iweb2.ch3.collaborative.similarity;
 
 import iweb2.ch3.collaborative.cache.FileStore;
 import iweb2.ch3.collaborative.cache.Store;
-import iweb2.ch3.collaborative.model.Dataset;
 
 import java.io.File;
 
@@ -37,19 +36,5 @@ public class SimilarityMatrixCache {
     
     public void remove(String id) {
         store.remove(id);
-    }
-    
-    
-    /**
-     * Generates id that can be used to store/retrieve SimilarityMatrix in/from
-     * cache. 
-     * 
-     * @param ds data set that was used to calculate similarity matrix.
-     * @param similarityType similarity type.
-     * @return id value that represents combination data set name and 
-     * type of recommendation.
-     */
-    public static String createId(Dataset ds, RecommendationType similarityType) {
-        return ds.getName() + "_" + similarityType.toString();
     }
 }

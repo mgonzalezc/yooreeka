@@ -29,7 +29,8 @@ public class TransactionLocation implements java.io.Serializable {
         return y;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return "[" + "x=" + x + ", y=" + y + "]";
     }
 

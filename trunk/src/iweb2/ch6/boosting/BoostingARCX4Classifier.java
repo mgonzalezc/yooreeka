@@ -22,7 +22,8 @@ public abstract class BoostingARCX4Classifier extends ClassifierEnsemble {
         this.originalTSet = tSet;
     }
     
-    public Concept classify(Instance instance) {
+    @Override
+	public Concept classify(Instance instance) {
     	
         ConceptMajorityVoter voter = new ConceptMajorityVoter(instance);
         
@@ -42,7 +43,8 @@ public abstract class BoostingARCX4Classifier extends ClassifierEnsemble {
 
     public abstract Classifier getClassifierForTraining(TrainingSet set);    
     
-    public boolean train() {
+    @Override
+	public boolean train() {
 
         baseClassifiers = new ArrayList<Classifier>();
         
@@ -134,7 +136,8 @@ public abstract class BoostingARCX4Classifier extends ClassifierEnsemble {
         return verbose;
     }
 
-    public void setVerbose(boolean verbose) {
+    @Override
+	public void setVerbose(boolean verbose) {
         this.verbose = verbose;
     }
 

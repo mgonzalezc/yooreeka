@@ -18,7 +18,8 @@ public class LinearNode extends BaseNode {
         this.b = b;
     }
 
-    public double fireNeuronDerivative() {
+    @Override
+	public double fireNeuronDerivative() {
         return a;
     }
     
