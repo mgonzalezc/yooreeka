@@ -52,7 +52,8 @@ public class EmailRuleClassifier {
     public static void main(String[] args) {
         EmailDataset ds = EmailData.createTestDataset();
         
-        EmailRuleClassifier classifier = new EmailRuleClassifier("c:/iWeb2/data/ch05/spamfilter/spamRules1.drl");
+        EmailRuleClassifier classifier = new EmailRuleClassifier(
+                "c:/iWeb2/data/ch05/spamRules.drl");
 
         classifier.train();
 
@@ -74,7 +75,7 @@ public class EmailRuleClassifier {
          * should win over rules that detect spam content.
          */
         classifier = new EmailRuleClassifier(
-            "c:/iWeb2/data/ch05/spamfilter/spamRulesWithConflictResolution.drl");
+            "c:/iWeb2/data/ch05/spamRulesWithConflict.drl");
 
         classifier.train();
         System.out.println("2. There should be no spam emails.\n" + 
