@@ -15,7 +15,7 @@ BaseDataset ds = MusicData.createDataset();
 // Serialize the dataset, so that we can load it in the next script
 //
 
-ds.save("C:/iWeb2/deploy/data/ch3_2_dataset.ser");
+ds.save("C:/iWeb2/data/ch3_2_dataset.ser");
 
 //
 // use Delphi with USER_BASED similarity

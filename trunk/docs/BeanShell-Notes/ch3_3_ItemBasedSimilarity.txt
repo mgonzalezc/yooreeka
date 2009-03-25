@@ -7,7 +7,7 @@ import *;
 // Load the dataset that we created before
 //
 
-BaseDataset ds = BaseDataset.load("C:/iWeb2/deploy/data/ch3_2_dataset.ser");
+BaseDataset ds = BaseDataset.load("C:/iWeb2/data/ch3_2_dataset.ser");
 
 //
 // use Delphi with ITEM_BASED similarity
