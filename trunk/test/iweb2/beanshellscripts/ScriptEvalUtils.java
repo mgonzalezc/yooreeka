@@ -1,5 +1,7 @@
 package iweb2.beanshellscripts;
 
+import iweb2.util.config.IWeb2Config;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import bsh.Interpreter;
 
 class ScriptEvalUtils {
     
-    public static String BEANSHELL_SCRIPTS_DIR = "c:/iWeb2/docs/BeanShell-Notes";
+    public static String BEANSHELL_SCRIPTS_DIR = IWeb2Config.getHome()+"/docs/BeanShell-Notes";
     
     public static List<String> getScripts(String filter) {
         return getScripts(BEANSHELL_SCRIPTS_DIR, filter);
