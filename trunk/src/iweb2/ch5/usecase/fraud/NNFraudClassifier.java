@@ -9,6 +9,7 @@ import iweb2.ch5.ontology.intf.Instance;
 import iweb2.ch5.usecase.fraud.data.Transaction;
 import iweb2.ch5.usecase.fraud.data.TransactionDataset;
 import iweb2.ch5.usecase.fraud.data.TransactionInstanceBuilder;
+import iweb2.util.config.IWeb2Config;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -26,7 +27,7 @@ public class NNFraudClassifier
 
     private static final long serialVersionUID = -1567098614540042277L;
 
-    private static final String SERIALIZATION_PATH = "C:\\iWeb2\\data\\ch05\\";
+    private static final String SERIALIZATION_PATH = IWeb2Config.getHome()+"\\data\\ch05\\";
 
     private boolean verbose=false;
 

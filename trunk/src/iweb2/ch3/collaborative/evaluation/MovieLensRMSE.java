@@ -5,6 +5,7 @@ import iweb2.ch3.collaborative.model.Dataset;
 import iweb2.ch3.collaborative.model.Rating;
 import iweb2.ch3.collaborative.recommender.Delphi;
 import iweb2.ch3.collaborative.similarity.RecommendationType;
+import iweb2.util.config.IWeb2Config;
 
 import java.io.File;
 import java.util.List;
@@ -18,7 +19,7 @@ public class MovieLensRMSE {
     }
 
     public MovieLensDataset createTrainingDataset(int n) {
-        String dataDir = "C:/iWeb2/data/ch03/MovieLens";
+        String dataDir = IWeb2Config.getHome()+"/data/ch03/MovieLens";
         
         File users = new File(dataDir, MovieLensDataset.USERS_FILENAME);
         File items = new File(dataDir, MovieLensDataset.ITEMS_FILENAME);
@@ -28,7 +29,7 @@ public class MovieLensRMSE {
     }
     
     public List<Rating> createTestRatings(int n) {
-        String dataDir = "C:/iWeb2/data/ch03/MovieLens";
+        String dataDir = IWeb2Config.getHome()+"/data/ch03/MovieLens";
         
         File ratings = new File(dataDir, "u"+n+".test");
 

@@ -18,6 +18,20 @@ public class IWeb2Config {
      */
     private static String systemPropertyName = "iweb2.configuration";
 
+    public static String getHome() {
+
+    	String osName = System.getProperty("os.name");
+    	
+    	if (osName.startsWith("Linux")) {
+    		
+    		return System.getProperty("iweb2.home");
+    		
+    	} else { // Windows is the default
+    		
+    		return "C:/iWeb2";
+    	}
+    }
+    
     /*
      * Default resource name that will be used to load properties.
      */

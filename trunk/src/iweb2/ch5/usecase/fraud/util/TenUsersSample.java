@@ -1,6 +1,7 @@
 package iweb2.ch5.usecase.fraud.util;
 
 import iweb2.ch5.usecase.fraud.data.Transaction;
+import iweb2.util.config.IWeb2Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,22 +16,22 @@ public class TenUsersSample {
      * File with descriptions to be used for valid transactions.
      */
     public static String TXN_DESC_FILENAME = 
-        "c:/iWeb2/data/ch05/fraud/descriptions.txt";
+    	IWeb2Config.getHome()+"/data/ch05/fraud/descriptions.txt";
 
     /*
      * File with descriptions to be used for fraud transactions.
      */
     public static String FRAUD_TXN_DESC_FILENAME = 
-        "c:/iWeb2/data/ch05/fraud/fraud-descriptions.txt";    
+    	IWeb2Config.getHome()+"/data/ch05/fraud/fraud-descriptions.txt";    
 
     /*
      * Generated transactions will be saved into this file.
      */
     public static String TRAINING_TXN_FILENAME = 
-        "c:/iWeb2/data/ch05/fraud/generated-training-txns.txt";
+    	IWeb2Config.getHome()+"/data/ch05/fraud/generated-training-txns.txt";
     
     public static String TEST_TXN_FILENAME = 
-        "c:/iWeb2/data/ch05/fraud/generated-test-txns.txt";
+    	IWeb2Config.getHome()+"/data/ch05/fraud/generated-test-txns.txt";
 
     
     public static void main(String[] args) {

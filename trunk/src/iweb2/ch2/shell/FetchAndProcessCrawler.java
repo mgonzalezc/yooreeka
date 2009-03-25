@@ -4,6 +4,7 @@ import iweb2.ch2.webcrawler.BasicWebCrawler;
 import iweb2.ch2.webcrawler.CrawlData;
 import iweb2.ch2.webcrawler.URLFilter;
 import iweb2.ch2.webcrawler.URLNormalizer;
+import iweb2.util.config.IWeb2Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class FetchAndProcessCrawler {
     public FetchAndProcessCrawler(String dir, int maxDepth, int maxDocs) {
     	
     	rootDir = dir;
-
+    	
     	if ( rootDir == null || rootDir.trim().length() == 0) {
     		
     		String prefix = System.getProperty("iweb2.home");
@@ -93,37 +94,41 @@ public class FetchAndProcessCrawler {
     	
     	setDefaultUrls();
     	
+    	String iWeb2Home = IWeb2Config.getHome();
+    	
     	// Include the spam pages ... all of them!
-    	addUrl("file:///c:/iWeb2/data/ch02/spam-01.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/spam-biz-01.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/spam-biz-02.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/spam-biz-03.html");    	
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/spam-01.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/spam-biz-01.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/spam-biz-02.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/spam-biz-03.html");    	
     }
     
     public void setDefaultUrls() {
     	
-    	addUrl("file:///c:/iWeb2/data/ch02/biz-01.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/biz-02.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/biz-03.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/biz-04.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/biz-05.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/biz-06.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/biz-07.html");
+    	String iWeb2Home = IWeb2Config.getHome();
+
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-01.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-02.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-03.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-04.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-05.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-06.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-07.html");
     	
-    	addUrl("file:///c:/iWeb2/data/ch02/sport-01.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/sport-02.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/sport-03.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/sport-01.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/sport-02.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/sport-03.html");
 
-    	addUrl("file:///c:/iWeb2/data/ch02/usa-01.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/usa-02.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/usa-03.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/usa-04.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/usa-01.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/usa-02.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/usa-03.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/usa-04.html");
 
-    	addUrl("file:///c:/iWeb2/data/ch02/world-01.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/world-02.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/world-03.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/world-04.html");
-    	addUrl("file:///c:/iWeb2/data/ch02/world-05.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/world-01.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/world-02.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/world-03.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/world-04.html");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/world-05.html");
     	
     	setFilesOnlyUrlFilter();    	
 	}
@@ -142,70 +147,72 @@ public class FetchAndProcessCrawler {
     
     public void setUrls(String val) {
 
+    	String iWeb2Home = IWeb2Config.getHome();
+
         setFilesOnlyUrlFilter();
         
     	this.seedUrls.clear();
     	
     	if (val.equalsIgnoreCase("biz")) {
     		
-        	addUrl("file:///c:/iWeb2/data/ch02/biz-01.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/biz-02.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/biz-03.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/biz-04.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/biz-05.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/biz-06.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/biz-07.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-01.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-02.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-03.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-04.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-05.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-06.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/biz-07.html");
         	
     	} else if (val.equalsIgnoreCase("sport")) {
     		
-        	addUrl("file:///c:/iWeb2/data/ch02/sport-01.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/sport-02.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/sport-03.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/sport-01.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/sport-02.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/sport-03.html");
 
     	} else if (val.equalsIgnoreCase("usa")) {
     		
-        	addUrl("file:///c:/iWeb2/data/ch02/usa-01.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/usa-02.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/usa-03.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/usa-04.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/usa-01.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/usa-02.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/usa-03.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/usa-04.html");
 
     	} else if (val.equalsIgnoreCase("world")) {
     		
-        	addUrl("file:///c:/iWeb2/data/ch02/world-01.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/world-02.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/world-03.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/world-04.html");
-        	addUrl("file:///c:/iWeb2/data/ch02/world-05.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/world-01.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/world-02.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/world-03.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/world-04.html");
+        	addUrl("file:///"+iWeb2Home+"/data/ch02/world-05.html");
     	} else if (val.equalsIgnoreCase("biz-docs")) {
             
-            addUrl("file:///c:/iWeb2/data/ch02/biz-01.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/biz-02.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/biz-03.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/biz-04.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/biz-05.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/biz-06.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/biz-07.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/biz-01.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/biz-02.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/biz-03.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/biz-04.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/biz-05.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/biz-06.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/biz-07.doc");
             
         } else if (val.equalsIgnoreCase("sport-docs")) {
             
-            addUrl("file:///c:/iWeb2/data/ch02/sport-01.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/sport-02.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/sport-03.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/sport-01.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/sport-02.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/sport-03.doc");
 
         } else if (val.equalsIgnoreCase("usa-docs")) {
             
-            addUrl("file:///c:/iWeb2/data/ch02/usa-01.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/usa-02.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/usa-03.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/usa-04.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/usa-01.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/usa-02.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/usa-03.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/usa-04.doc");
 
         } else if (val.equalsIgnoreCase("world-docs")) {
             
-            addUrl("file:///c:/iWeb2/data/ch02/world-01.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/world-02.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/world-03.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/world-04.doc");
-            addUrl("file:///c:/iWeb2/data/ch02/world-05.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/world-01.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/world-02.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/world-03.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/world-04.doc");
+            addUrl("file:///"+iWeb2Home+"/data/ch02/world-05.doc");
         }    	
     	else {
     	    throw new IllegalArgumentException("Unknown value: '" + val + "'");
@@ -214,10 +221,12 @@ public class FetchAndProcessCrawler {
     }
     
     public void addDocSpam() {
-    	
-    	addUrl("file:///c:/iWeb2/data/ch02/spam-biz-01.doc");
-    	addUrl("file:///c:/iWeb2/data/ch02/spam-biz-02.doc");
-    	addUrl("file:///c:/iWeb2/data/ch02/spam-biz-03.doc");    	
+
+    	String iWeb2Home = IWeb2Config.getHome();
+
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/spam-biz-01.doc");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/spam-biz-02.doc");
+    	addUrl("file:///"+iWeb2Home+"/data/ch02/spam-biz-03.doc");    	
     }
     
 	/**

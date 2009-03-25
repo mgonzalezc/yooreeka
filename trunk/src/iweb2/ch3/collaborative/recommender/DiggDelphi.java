@@ -6,6 +6,7 @@ import iweb2.ch3.collaborative.model.Dataset;
 import iweb2.ch3.collaborative.model.SimilarUser;
 import iweb2.ch3.collaborative.model.User;
 import iweb2.ch3.collaborative.similarity.RecommendationType;
+import iweb2.util.config.IWeb2Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -229,7 +230,7 @@ public class DiggDelphi {
      }
 
 	public static void main(String[] args) {
-		BaseDataset ds = DiggData.loadData("C:/iWeb2/data/ch03/digg_stories.csv");
+		BaseDataset ds = DiggData.loadData(IWeb2Config.getHome()+"/data/ch03/digg_stories.csv");
 		iweb2.ch3.collaborative.model.User user = ds.getUser(1);
 		DiggDelphi delphi = new DiggDelphi(ds);
 		delphi.recommend(user);

@@ -3,6 +3,7 @@ package iweb2.ch5.usecase.email.data;
 import iweb2.ch2.webcrawler.model.ProcessedDocument;
 import iweb2.ch2.webcrawler.parser.html.HTMLDocumentParser;
 import iweb2.ch5.usecase.email.EmailClassifier;
+import iweb2.util.config.IWeb2Config;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -19,31 +20,31 @@ public class EmailData {
      * List of html files that we will treat as emails.
      */
     public static String[][] TRAINING_DATA = new String[][] {
-        {"c:/iWeb2/data/ch02/biz-02.html", "A@sengerhost", "1@host"},
-        {"c:/iWeb2/data/ch02/biz-03.html", "B@sengerhost", "2@host"},
-        {"c:/iWeb2/data/ch02/biz-04.html", "C@sengerhost", "3@host"},
-        {"c:/iWeb2/data/ch02/biz-05.html", "D@sengerhost", "4@host"},
-        {"c:/iWeb2/data/ch02/biz-06.html", "E@sengerhost", "5@host"},
-        {"c:/iWeb2/data/ch02/biz-07.html", "F@sengerhost", "6@host"},
-        {"c:/iWeb2/data/ch02/sport-02.html", "G@sengerhost", "7@host"},
-        {"c:/iWeb2/data/ch02/sport-03.html", "H@sengerhost", "8@host"},
-        {"c:/iWeb2/data/ch02/usa-02.html", "I@sengerhost", "9@host"},
-        {"c:/iWeb2/data/ch02/usa-03.html", "J@sengerhost", "10@host"},
-        {"c:/iWeb2/data/ch02/usa-04.html", "K@sengerhost", "11@host"},
-        {"c:/iWeb2/data/ch02/world-02.html", "L@sengerhost", "12@host"},
-        {"c:/iWeb2/data/ch02/world-03.html", "M@sengerhost", "13@host"},
-        {"c:/iWeb2/data/ch02/world-04.html", "N@sengerhost", "14@host"},
-        {"c:/iWeb2/data/ch02/world-05.html", "O@sengerhost", "15@host"},
-        {"c:/iWeb2/data/ch02/spam-biz-02.html", "P@sengerhost", "16@host"},
-        {"c:/iWeb2/data/ch02/spam-biz-03.html", "Q@sengerhost", "17@host"}
+        {IWeb2Config.getHome()+"/data/ch02/biz-02.html", "A@sengerhost", "1@host"},
+        {IWeb2Config.getHome()+"/data/ch02/biz-03.html", "B@sengerhost", "2@host"},
+        {IWeb2Config.getHome()+"/data/ch02/biz-04.html", "C@sengerhost", "3@host"},
+        {IWeb2Config.getHome()+"/data/ch02/biz-05.html", "D@sengerhost", "4@host"},
+        {IWeb2Config.getHome()+"/data/ch02/biz-06.html", "E@sengerhost", "5@host"},
+        {IWeb2Config.getHome()+"/data/ch02/biz-07.html", "F@sengerhost", "6@host"},
+        {IWeb2Config.getHome()+"/data/ch02/sport-02.html", "G@sengerhost", "7@host"},
+        {IWeb2Config.getHome()+"/data/ch02/sport-03.html", "H@sengerhost", "8@host"},
+        {IWeb2Config.getHome()+"/data/ch02/usa-02.html", "I@sengerhost", "9@host"},
+        {IWeb2Config.getHome()+"/data/ch02/usa-03.html", "J@sengerhost", "10@host"},
+        {IWeb2Config.getHome()+"/data/ch02/usa-04.html", "K@sengerhost", "11@host"},
+        {IWeb2Config.getHome()+"/data/ch02/world-02.html", "L@sengerhost", "12@host"},
+        {IWeb2Config.getHome()+"/data/ch02/world-03.html", "M@sengerhost", "13@host"},
+        {IWeb2Config.getHome()+"/data/ch02/world-04.html", "N@sengerhost", "14@host"},
+        {IWeb2Config.getHome()+"/data/ch02/world-05.html", "O@sengerhost", "15@host"},
+        {IWeb2Config.getHome()+"/data/ch02/spam-biz-02.html", "P@sengerhost", "16@host"},
+        {IWeb2Config.getHome()+"/data/ch02/spam-biz-03.html", "Q@sengerhost", "17@host"}
     };
 
     public static String[][] TEST_DATA = new String[][] {
-        {"c:/iWeb2/data/ch02/biz-01.html", "aa@senderhost", "100@host"},
-        {"c:/iWeb2/data/ch02/sport-01.html", "bb@senderhost","101@host"},
-        {"c:/iWeb2/data/ch02/usa-01.html", "cc@senderhost", "102@host"},
-        {"c:/iWeb2/data/ch02/world-01.html", "dd@senderhost", "103@host"},
-        {"c:/iWeb2/data/ch02/spam-biz-01.html", "friend@senderhost", "104@host"}
+        {IWeb2Config.getHome()+"/data/ch02/biz-01.html", "aa@senderhost", "100@host"},
+        {IWeb2Config.getHome()+"/data/ch02/sport-01.html", "bb@senderhost","101@host"},
+        {IWeb2Config.getHome()+"/data/ch02/usa-01.html", "cc@senderhost", "102@host"},
+        {IWeb2Config.getHome()+"/data/ch02/world-01.html", "dd@senderhost", "103@host"},
+        {IWeb2Config.getHome()+"/data/ch02/spam-biz-01.html", "friend@senderhost", "104@host"}
     };
     
     public static List<Email> loadEmails(String[][] allEmails) {

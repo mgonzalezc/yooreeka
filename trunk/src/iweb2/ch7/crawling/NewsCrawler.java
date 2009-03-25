@@ -4,6 +4,7 @@ import iweb2.ch2.webcrawler.BasicWebCrawler;
 import iweb2.ch2.webcrawler.CrawlData;
 import iweb2.ch2.webcrawler.URLFilter;
 import iweb2.ch2.webcrawler.URLNormalizer;
+import iweb2.util.config.IWeb2Config;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -95,7 +96,7 @@ public class NewsCrawler {
     /*
      * Directory that contains "previously unseen" documents.
      */
-    public static final String TEST_FILES_DIR_CH7 = "C:/iWeb2/data/ch07/test";
+    public static final String TEST_FILES_DIR_CH7 = IWeb2Config.getHome()+"/data/ch07/test";
 
     public void setAllSeedUrls() {
 

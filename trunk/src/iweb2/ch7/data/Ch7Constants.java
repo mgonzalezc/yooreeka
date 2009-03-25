@@ -1,12 +1,14 @@
 package iweb2.ch7.data;
 
+import iweb2.util.config.IWeb2Config;
+
 /**
  * Various constants, some from our work on chapter 2 and some new for chapter 7
  */
 public class Ch7Constants {
 
     // References from chapter 2
-    public static final String CH2_FILES_DIR = "C:/iWeb2/data/ch02/";
+    public static final String CH2_FILES_DIR = IWeb2Config.getHome()+"/data/ch02/";
     
     public static final String[] CH2_TRAINING_DOC_SAMPLES = 
         {"biz-01.html",
@@ -34,13 +36,13 @@ public class Ch7Constants {
     };
 
     // Chapter 7
-    public static final String CRAWL_DATA_ROOT_DIR = "C:/iWeb2/data/ch07/news-crawls";
+    public static final String CRAWL_DATA_ROOT_DIR = IWeb2Config.getHome()+"/data/ch07/news-crawls";
 
-    public static final String TRAINING_FILES_DIR = "C:/iWeb2/data/ch07/training";
+    public static final String TRAINING_FILES_DIR = IWeb2Config.getHome()+"/data/ch07/training";
     
-    public static final String TEST_FILES_DIR = "C:/iWeb2/data/ch07/test";
+    public static final String TEST_FILES_DIR = IWeb2Config.getHome()+"/data/ch07/test";
     
-    public static final String TEMP_DIR = "c:/iWeb2/data/ch07/temp/";
+    public static final String TEMP_DIR = IWeb2Config.getHome()+"/data/ch07/temp/";
     
     
 }

@@ -2,6 +2,7 @@ package iweb2.ch3.collaborative.data;
 
 import iweb2.ch3.collaborative.model.Content;
 import iweb2.ch3.collaborative.model.Item;
+import iweb2.util.config.IWeb2Config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -135,7 +136,7 @@ public class NewsData {
     
     
     private static Content loadContent(String docName) {
-        return new HTMLContent(docName, "C:/iWeb2/data/ch02/" + docName);
+        return new HTMLContent(docName, IWeb2Config.getHome()+"/data/ch02/" + docName);
     }
     
     /**

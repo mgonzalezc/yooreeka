@@ -7,12 +7,13 @@ import iweb2.ch2.webcrawler.db.ProcessedDocsDB;
 import iweb2.ch2.webcrawler.model.ProcessedDocument;
 import iweb2.ch7.crawling.CrawlResultsNewsDataset;
 import iweb2.ch7.crawling.FileListNewsDataset;
+import iweb2.util.config.IWeb2Config;
 
 public class NewsDatasetBuilder {
 
     public static int TOP_N_TERMS = 50;
-    public static final String TRAINING_FILES_DIR_CH7 = "C:/iWeb2/data/ch07/training";
-    public static final String TEST_FILES_DIR_CH7 = "C:/iWeb2/data/ch07/test";
+    public static final String TRAINING_FILES_DIR_CH7 = IWeb2Config.getHome()+"/data/ch07/training";
+    public static final String TEST_FILES_DIR_CH7 = IWeb2Config.getHome()+"/data/ch07/test";
     
     public static NewsDataset createNewsDatasetFromFileList(
             String datasetName, String dir) {

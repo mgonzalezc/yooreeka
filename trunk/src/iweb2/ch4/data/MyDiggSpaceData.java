@@ -10,6 +10,7 @@ import iweb2.ch4.model.Attribute;
 import iweb2.ch4.model.DataPoint;
 import iweb2.ch4.similarity.CosineDistance;
 import iweb2.ch4.utils.Attributes;
+import iweb2.util.config.IWeb2Config;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class MyDiggSpaceData {
 
     
     public static MyDiggSpaceDataset createDataset(int topNTerms) {
-        DiggData.loadData("C:/iWeb2/data/ch04/ch4_digg_stories.csv");
+        DiggData.loadData(IWeb2Config.getHome()+"/data/ch04/ch4_digg_stories.csv");
         
         List<DiggStoryItem> allStories = DiggData.allStories;
         

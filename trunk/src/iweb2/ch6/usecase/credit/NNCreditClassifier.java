@@ -9,6 +9,7 @@ import iweb2.ch5.ontology.intf.Instance;
 import iweb2.ch6.usecase.credit.data.UserDataset;
 import iweb2.ch6.usecase.credit.data.users.User;
 import iweb2.ch6.usecase.credit.util.UserInstanceBuilder;
+import iweb2.util.config.IWeb2Config;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -26,7 +27,7 @@ public class NNCreditClassifier
 
     private static final long serialVersionUID = 8584476885427513654L;
 
-    private static final String SERIALIZATION_PATH = "C:\\iWeb2\\data\\ch06\\";
+    private static final String SERIALIZATION_PATH = IWeb2Config.getHome()+"\\data\\ch06\\";
 
     private boolean verbose=false;
 
