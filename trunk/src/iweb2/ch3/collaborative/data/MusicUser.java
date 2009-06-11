@@ -74,7 +74,7 @@ public class MusicUser extends User {
 				sim = Math.sqrt(sim/commonItems);
 				
 				// Similarity should be between 0 and 1
-				// For the value 0, the two users are as disimilar as they come
+				// For the value 0, the two users are as dissimilar as they come
 				// For the value 1, their preferences (based on the available data) are identical.
 				//
 				// Here is a function that accomplishes exactly that
