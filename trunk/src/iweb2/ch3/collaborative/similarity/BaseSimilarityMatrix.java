@@ -100,4 +100,16 @@ public abstract class BaseSimilarityMatrix implements SimilarityMatrix {
             }
         }
     }
+    
+    public void print(int nRows) {
+    	int count=0;
+        if( similarityValues != null ) {
+            for(double[] row : this.similarityValues) {
+            	if (count < nRows) {
+            		System.out.println(Arrays.toString(row));
+            	}
+            	count++;
+            }
+        }
+    }
 }
