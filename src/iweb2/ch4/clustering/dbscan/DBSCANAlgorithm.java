@@ -94,6 +94,14 @@ public class DBSCANAlgorithm {
     
     private boolean verbose = true;
     
+    public boolean isVerbose() {
+	return verbose;
+    }
+
+    public void setVerbose(boolean verbose) {
+	this.verbose = verbose;
+    }
+
     /**
      * Initializes algorithm with all data that it needs.
      * 
