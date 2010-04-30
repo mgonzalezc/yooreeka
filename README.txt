@@ -74,7 +74,7 @@ Note: Within the BeanShell you will have command history. So, if you typed
 something and you would like to repeat it the command with different argument
 values or type something else similar to the previous command, you can use the 
 UP / DOWN arrows to move up and down the history of the BeanShell commands,
-respecatiavely.
+respectively.
 
 Enjoy! 
 ______________________________________________________________________________		
