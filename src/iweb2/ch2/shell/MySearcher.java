@@ -6,6 +6,7 @@ import iweb2.ch2.data.SearchResult;
 import iweb2.ch2.ranking.Rank;
 import iweb2.ch5.classification.bayes.NaiveBayes;
 import iweb2.ch5.ontology.core.BaseConcept;
+import iweb2.ch5.ontology.intf.Concept;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -194,10 +195,14 @@ public class MySearcher {
 				
 				double pageRankScore  = pR.getPageRank(url);
 				
-				BaseConcept bC = new BaseConcept(url);
+				double userClickScore = 0.0;
 				
-				double userClickScore = learner.getProbability(bC, uClick); 
-				
+				for (Concept bC : learner.getTset().getConceptSet()) {
+					if (bC.getName().equalsIgnoreCase(url)) {
+						userClickScore = learner.getProbability(bC, uClick);
+					} 
+				}
+												
 				// Create the final score
 				double hScore;
 				
@@ -212,6 +217,22 @@ public class MySearcher {
 							
 				// Update the score of the results
 				docResults[i].setScore(hScore);
+
+				/*
+				 * Uncomment this block to show the various scores in the BeanShell
+				 *
+				  StringBuilder b = new StringBuilder();
+				
+				  System.out.println("________________________________________________________________________________");
+				
+				  b.append("Document      : ").append(docResults[i].getUrl()).append("\n");
+				  b.append("UserClick URL :").append(uClick.getUrl()).append("\n");
+				  b.append("\n");
+				  b.append("Index score: ").append(indexScore).append(", ");
+				  b.append("PageRank score: ").append(pageRankScore).append(", ");
+				  b.append("User click score: ").append(userClickScore);
+				  System.out.println(b.toString());															
+				*/
 			}
 		}		
 

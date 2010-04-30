@@ -80,7 +80,7 @@ public class UserClick  extends BaseInstance {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((url == null) ? 0 : url.hashCode());
+        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result
                 + ((userQuery == null) ? 0 : userQuery.hashCode());
         return result;
@@ -95,10 +95,10 @@ public class UserClick  extends BaseInstance {
         if (getClass() != obj.getClass())
             return false;
         final UserClick other = (UserClick) obj;
-        if (url == null) {
-            if (other.url != null)
+        if (getUrl() == null) {
+            if (other.getUrl() != null)
                 return false;
-        } else if (!url.equals(other.url))
+        } else if (!getUrl().equals(other.getUrl()))
             return false;
         if (userQuery == null) {
             if (other.userQuery != null)
@@ -110,12 +110,12 @@ public class UserClick  extends BaseInstance {
 
 
     /**
-     * The first attribute of a user click Instance is the URL
+     * The concept of a user click is its URL
      * 
 	 * @return the url
 	 */
 	public String getUrl() {
-		return (String) attributes[0].getValue();
+		return getConcept().getName();
 	}
 	
 
