@@ -44,7 +44,6 @@ public class FraudErrorEstimator {
     
     public void run() {
     	
-    	
         for(Transaction txn : testDS.getTransactions() ) {
             Instance i = instanceBuilder.createInstance(txn);
             Concept concept = classifier.classify(i);
@@ -76,8 +75,6 @@ public class FraudErrorEstimator {
         System.out.println("Classified correctly: " + getCorrectCount() + 
                 ", Misclassified valid txns: " + getIncorrectValidCount() + 
                 ", Misclassified fraud txns: " + getIncorrectFraudCount());
-        
-        int misclassifiedTotal = getIncorrectFraudCount() + getIncorrectValidCount();
     }
     
 

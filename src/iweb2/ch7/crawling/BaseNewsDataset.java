@@ -34,8 +34,7 @@ public abstract class BaseNewsDataset implements NewsDataset {
         }
         else {
             System.out.println("No users and ratings to load.");
-        }
-        
+        }   
     }
     
     

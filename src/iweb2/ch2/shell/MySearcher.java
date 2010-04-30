@@ -5,7 +5,6 @@ import iweb2.ch2.clicks.UserQuery;
 import iweb2.ch2.data.SearchResult;
 import iweb2.ch2.ranking.Rank;
 import iweb2.ch5.classification.bayes.NaiveBayes;
-import iweb2.ch5.ontology.core.BaseConcept;
 import iweb2.ch5.ontology.intf.Concept;
 
 import java.io.IOException;
