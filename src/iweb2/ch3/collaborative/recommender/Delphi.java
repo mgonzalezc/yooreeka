@@ -402,7 +402,20 @@ public class Delphi implements Recommender {
 
     private double estimateItemBasedRating(User user, Item item) {
     	
-        double estimatedRating = item.getAverageRating();
+        double estimatedRating;
+        
+        if (item != null && user != null) {
+        	
+        	estimatedRating = item.getAverageRating();
+        	
+        } else {
+        	if (item == null && user == null ) {
+        		throw new IllegalArgumentException("At least, one of the arguments must not be null!");
+        	} else {
+        		return 3.0d;
+        	}
+        }
+        
         int itemId = item.getId();
         int userId = user.getId();
         double similaritySum = 0.0;
