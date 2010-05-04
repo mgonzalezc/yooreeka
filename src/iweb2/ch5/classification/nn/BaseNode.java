@@ -8,7 +8,9 @@ import java.util.List;
 
 abstract class BaseNode implements Node {
 
-    protected String nodeId;
+	private static final long serialVersionUID = 9035029651203728480L;
+
+	protected String nodeId;
     protected double x; // input value
     protected double y; // output value
     protected double bias;

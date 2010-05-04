@@ -16,13 +16,15 @@ import java.util.Map;
 
 public abstract class BaseNewsDataset implements NewsDataset {
     
-    private Map<String, NewsPortalUser> newsUsers = new HashMap<String, NewsPortalUser>();
+	private static final long serialVersionUID = -1733770863766398248L;
+
+	private Map<String, NewsPortalUser> newsUsers = new HashMap<String, NewsPortalUser>();
     private List<NewsRating> allRatings = new ArrayList<NewsRating>();
 
     private String userAndRatingsFilename = null;
     
-    BaseNewsDataset() {
-        
+    public BaseNewsDataset() {
+    	//DO NOTHING HERE
     }
     
     public void init() {

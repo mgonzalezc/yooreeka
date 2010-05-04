@@ -7,8 +7,8 @@ import iweb2.ch3.collaborative.model.SimilarItem;
 import iweb2.ch3.collaborative.model.SimilarUser;
 import iweb2.ch3.collaborative.model.User;
 import iweb2.ch3.collaborative.similarity.RecommendationType;
-import iweb2.ch3.collaborative.similarity.SimilarityMatrix;
-import iweb2.ch3.collaborative.similarity.SimilarityMatrixRepository;
+import iweb2.ch3.collaborative.similarity.naive.SimilarityMatrix;
+import iweb2.ch3.collaborative.similarity.util.SimilarityMatrixRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -381,11 +381,11 @@ public class Delphi implements Recommender {
                      * @todo describe how this generalizes to more accurate
                      *       similarities
                      */
-                    double similarityBetweenUsers = similarityMatrix.getValue(
-                            userId, anotherUser.getId());
+                    double similarityBetweenUsers = similarityMatrix.getValue(userId, anotherUser.getId());
+                    
                     double ratingByNeighbor = itemRating.getRating();
-                    double weightedRating = similarityBetweenUsers
-                            * ratingByNeighbor;
+                    
+                    double weightedRating = similarityBetweenUsers * ratingByNeighbor;
 
                     weightedRatingSum += weightedRating;
                     similaritySum += similarityBetweenUsers;
