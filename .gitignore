@@ -1,0 +1,9 @@
+*.iml
+.idea
+.settings
+.classpath
+.project
+deploy/lib
+build/dist
+*.class
+data/ch07/news-crawls/*
