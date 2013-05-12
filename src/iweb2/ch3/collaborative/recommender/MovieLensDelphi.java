@@ -6,7 +6,7 @@ import iweb2.ch3.collaborative.model.Rating;
 import iweb2.ch3.collaborative.model.SimilarItem;
 import iweb2.ch3.collaborative.model.SimilarUser;
 import iweb2.ch3.collaborative.model.User;
-import iweb2.ch3.collaborative.similarity.MovieLensItemSimilarity;
+import iweb2.ch3.collaborative.similarity.movielens.MovieLensItemSimilarity;
 
 import java.util.ArrayList;
 import java.util.List;
