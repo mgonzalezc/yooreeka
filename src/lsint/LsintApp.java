@@ -216,15 +216,6 @@ public class LsintApp extends JPanel
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-
-//            	if (ui.hasSystemLookAndFeel()) {
-//            		try {
-//            			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//            		} catch (Exception e) {
-//            			System.err.println("Couldn't use system look and feel.");
-//            		}
-//            	}
-
                 JFrame frame = new JFrame(ui.getLoadedDataset().getDatasetName());
                 frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                 frame.add(ui);
